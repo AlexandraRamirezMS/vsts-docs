@@ -49,7 +49,7 @@ This task is open source [on GitHub](https://github.com/Microsoft/azure-pipeline
 
 ### Do I need an agent?
 
-You do not need an agent to run this task. This task Can be used in only an [agentless job](../../process/phases.md#server-jobs) of a release pipeline.
+
 
 ### Where should a task signal completion?
 
