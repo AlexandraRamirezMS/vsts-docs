@@ -1,0 +1,11 @@
+# Build Project for PhoeniXGate UI - Core - Release
+#
+
+trigger:
+ branches:
+  include:
+    - master
+ paths:
+  include:
+    - src
+
