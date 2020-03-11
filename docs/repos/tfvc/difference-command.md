@@ -5,9 +5,9 @@ description: Difference Command
 ms.assetid: d7bf3b53-b0b8-4b57-a9ce-5a475b715e1d
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: reference
 ms.date: 08/10/2016
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Difference Command
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 Compares, and if it is possible, displays differences between two files, files in two folders, or a shelveset and a local or a server file.
 
@@ -24,25 +24,27 @@ Compares, and if it is possible, displays differences between two files, files i
 
 To use the **difference** command, you must have the **Read** permission for all specified items set to **Allow**. For more information, see [Permissions and groups reference](../../organizations/security/permissions.md).
 
-    tf diff[erence] itemspec [/version:versionspec] [/type:filetype] 
-    [/format:format [/ignorespace] [/ignoreeol] [/ignorecase] [/recursive] 
-    [/options][/noprompt][/login:username,[password]]
+```
+tf diff[erence] itemspec [/version:versionspec] [/type:filetype] 
+[/format:format [/ignorespace] [/ignoreeol] [/ignorecase] [/recursive] 
+[/options][/noprompt][/login:username,[password]]
+```
 
-&nbsp;
+```
+tf diff[erence] itemspec itemspec2 [/type:filetype] [/format: format] 
+[/ignorespace] [/ignoreeol] [/ignorecase] [/recursive] [/options] [/noprompt][/login:username,[password]]
+```
 
-    tf diff[erence] itemspec itemspec2 [/type:filetype] [/format: format] 
-    [/ignorespace] [/ignoreeol] [/ignorecase] [/recursive] [/options] [/noprompt][/login:username,[password]]
+```
+tf diff[erence] [/shelveset:shelvesetname[;shelvesetowner]] 
+shelveset_itemspec [/type:filetype] 
+[/format: format] [/ignorespace] [/ignoreeol] [/ignorecase] 
+[/recursive] [/options] [/noprompt][/login:username,[password]]
+```
 
-&nbsp;
-
-    tf diff[erence] [/shelveset:shelvesetname[;shelvesetowner]] 
-    shelveset_itemspec [/type:filetype] 
-    [/format: format] [/ignorespace] [/ignoreeol] [/ignorecase] 
-    [/recursive] [/options] [/noprompt][/login:username,[password]]
-
-&nbsp;
-
-    tf diff[erence] /configure
+```
+tf diff[erence] /configure
+```
 
 ## Parameters
 
@@ -74,7 +76,7 @@ To use the **difference** command, you must have the **Read** permission for all
 	<td><p>Specifies the name of a folder or file in the shelveset to compare to the base shelveset version.</p></td></tr>
 <tr>
 	<td><p><em>username</em></p></td>
-	<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <em>DOMAIN</em>\<em>UserName</em> or <em>UserName.</em></p></td></tr></tbody>
+    <td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <em>DOMAIN</em>&lt;em&gt;UserName</em> or <em>UserName.</em></p></td></tr></tbody>
 </table>
 
 |**Option**|**Description**|
@@ -93,8 +95,8 @@ To use the **difference** command, you must have the **Read** permission for all
 |**/login**|Specifies the user name and password to authenticate the user with Team Foundation Server.|
 
 ## Remarks
->**Note:**  
->You can type **tf diff** or **tf difference** at the command line to run this command.
+> [!NOTE]
+> You can type **tf diff** or **tf difference** at the command line to run this command.
 
 You can use the **difference** command to compare and if it is possible, display differences between:
 
@@ -106,7 +108,7 @@ You can use the **difference** command to compare and if it is possible, display
 
 You can use the **difference** command to compare both versioned and non-versioned files.
 
-Team Foundation categorizes all files by type. Text files can be merged and compared, side by side and line by line, as long as both files have the same encoding. If you want to compare two files whose encodings are not the same, you can temporarily mask, or override the encoding property for a file by using the **/type** option. Binary files can be compared but cannot be merged. When you pass one or more binary files to the difference command, Team Foundation indicates whether differences exist between it and the item to which it is being compared. For more information about how Team Foundation differentiates between and treats files of disparate types, see [Managing File Types](/tfs/server/admin/manage-file-types).
+Team Foundation categorizes all files by type. Text files can be merged and compared, side by side and line by line, as long as both files have the same encoding. If you want to compare two files whose encodings are not the same, you can temporarily mask, or override the encoding property for a file by using the **/type** option. Binary files can be compared but cannot be merged. When you pass one or more binary files to the difference command, Team Foundation indicates whether differences exist between it and the item to which it is being compared. For more information about how Team Foundation differentiates between and treats files of disparate types, see [Managing File Types](/azure/devops/server/admin/manage-file-types).
 
 If you specify two file names, the two files are compared. Instead of using the **/version** flag, you can specify versions by appending a semicolon and version specifier to the end of each file name.
 
@@ -124,92 +126,107 @@ For more information on how to find the **tf** command-line utility, see [Tf Com
 
 The *format* parameter, used with the **/format** option, specifies many different output formats. The available output types are
 
--   **Visual**
+- **Visual**
 
-    **Visual** format type opens an external difference application. By default diffmerge.exe is launched.
+  **Visual** format type opens an external difference application. By default diffmerge.exe is launched.
 
--   **Brief**
+- **Brief**
 
-    Brief format prints whether the files being compared differ.
+  Brief format prints whether the files being compared differ.
 
--   **Context**
+- **Context**
 
-    **Context** format provides lines of context for the differences in the files. This format is derived from the UNIX based **diff -c** output format.
+  **Context** format provides lines of context for the differences in the files. This format is derived from the UNIX based **diff -c** output format.
 
--   **RCS**
+- **RCS**
 
-    **RCS** format is similar to **/format:unix**, except context lines are not supplied.
+  **RCS** format is similar to **/format:unix**, except context lines are not supplied.
 
-    No special handing for a missing end of line marker at the end of the file is provided.
+  No special handing for a missing end of line marker at the end of the file is provided.
 
--   **SS**
+- **SS**
 
-    **SS** is default difference output format for Visual SourceSafe. For more information, see "Diff (Command Line)" at the Microsoft Web site (<http://go.microsoft.com/fwlink/?LinkId=99139>).
+  **SS** is default difference output format for Visual SourceSafe. For more information, see "Diff (Command Line)" at the Microsoft Web site (<https://go.microsoft.com/fwlink/?LinkId=99139>).
 
--   **SS\_SideBySide**
+- **SS\_SideBySide**
 
-    **SS\_SideBySide** is the default side-by-side output format for Visual SourceSafe.
+  **SS\_SideBySide** is the default side-by-side output format for Visual SourceSafe.
 
--   **SS\_Unix**
+- **SS\_Unix**
 
-    SS\_Unix is similar to the /format:unix output format, but /format:ss\_unix includes context lines and /format:unix does not.
+  SS\_Unix is similar to the /format:unix output format, but /format:ss\_unix includes context lines and /format:unix does not.
 
--   **Unified**
+- **Unified**
 
-    **Unified** format is derived from the UNIX based **diff -u** output format. **/format:context** repeats identical context lines between the difference strings although **/format:unified** does not.
+  **Unified** format is derived from the UNIX based **diff -u** output format. **/format:context** repeats identical context lines between the difference strings although **/format:unified** does not.
 
-    **Unified** format produces a new unified difference string (@@ ... @@) line only when the distance to the next difference string is larger than the number of context lines.
+  **Unified** format produces a new unified difference string (@@ ... @@) line only when the distance to the next difference string is larger than the number of context lines.
 
--   **Unix**
+- **Unix**
 
-    This output type is derived from the UNIX based **diff** command output format.
+  This output type is derived from the UNIX based **diff** command output format.
 
-    The **Unix** output format is constructed in the following way:
+  The **Unix** output format is constructed in the following way:
 
-            <metadataline>
-        "< " line prefix for lines from the first file
-        "---" line
-        "> " line prefix for lines from the second file
+    ```
+    <metadataline>
+    "< " line prefix for lines from the first file
+    "---" line
+    "> " line prefix for lines from the second file
 
-        <metadataline> can be one of these possibilities:
-        #a#,# -- add lines from line # in file1 into file2 at lines #->#
-        #,#d# -- delete lines from line # -> # in file 1 from file2 at line #
-        #,#c#,# -- change lines from line # -> # in file1 into the lines in file2 at line # -> #
+    <metadataline> can be one of these possibilities:
+    #a#,# -- add lines from line # in file1 into file2 at lines #->#
+    #,#d# -- delete lines from line # -> # in file 1 from file2 at line #
+    #,#c#,# -- change lines from line # -> # in file1 into the lines in file2 at line # -> #
 
-        # signs separated by commas indicate a line range.
-        # signs before the character indicate line numbers in the first file
-        # signs after the character indicate line numbers in the second file
+    # signs separated by commas indicate a line range.
+    # signs before the character indicate line numbers in the first file
+    # signs after the character indicate line numbers in the second file
 
-        /// No end of line marker at the end of the file:
-        /// \ No newline at end of file
-## Examples
-The following example displays the differences between the local version of 314.cs and the workspace version of 314.cs that is the version of the file that was checked out from the Team Foundation version control server.
+    /// No end of line marker at the end of the file:
+    /// \ No newline at end of file
+    ```
 
-    c:\projects>tf difference 314.cs
+  ## Examples
+  The following example displays the differences between the local version of 314.cs and the workspace version of 314.cs that is the version of the file that was checked out from the Team Foundation version control server.
+
+  c:\projects>tf difference 314.cs
 
 The following example displays all files that have been changed in the src folder. Does not display files that have been changed in subfolders of src.
 
-    c:\projects>tf difference src /format:visual
+```
+c:\projects>tf difference src /format:visual
+```
 
 The following example displays the differences between changeset 3 and changeset 8 of 1254.cs.
 
-    c:\projects>tf difference /version:C3~C8 1254.cs
+```
+c:\projects>tf difference /version:C3~C8 1254.cs
+```
 
 The following examples display the differences between the version of 314.cs that belong to the label "release" and the version that belongs to changeset 3200.
 
-    c:\projects>tf difference 314.cs;Lrelease 314.cs;C3200
+```
+c:\projects>tf difference 314.cs;Lrelease 314.cs;C3200
+```
 
 -or-
 
-    c:\projects>tf difference 314.cs;Lrelease~C3200
+```
+c:\projects>tf difference 314.cs;Lrelease~C3200
+```
 
 The following example displays the difference between the versions of e271.cs that a user named Nadia shelved in shelveset PeerCodeReview8 and the *base shelveset version* that is the version upon which she based her changes. Also displays the types of changes pending against e271.cs when Nadia shelved.
 
-    c:\projects> tf difference /shelveset:PeerCodeReview8;Nadia e271.cs
+```
+c:\projects> tf difference /shelveset:PeerCodeReview8;Nadia e271.cs
+```
 
 The following example displays the differences between all files in the PeerCodeReview2 shelveset and the base shelveset version of those files.
 
-    c:\projects> tf difference /shelveset:PeerCodeReview2
+```
+c:\projects> tf difference /shelveset:PeerCodeReview2
+```
 
 ## See Also
 
@@ -223,7 +240,7 @@ The following example displays the differences between all files in the PeerCode
 
 #### Concepts
 
-[Managing File Types](/tfs/server/admin/manage-file-types)
+[Managing File Types](/azure/devops/server/admin/manage-file-types)
 
 #### Other Resources
 

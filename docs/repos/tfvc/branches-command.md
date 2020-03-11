@@ -5,9 +5,9 @@ description: Branches Command
 ms.assetid: dae78c90-c65a-444d-96cb-84027b91ad4a
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: reference
 ms.date: 08/10/2016
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Branches Command
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 Displays the history of a branch for a specified file or folder.
 
@@ -24,7 +24,9 @@ Displays the history of a branch for a specified file or folder.
 
 To use the **branches** command, your **Read** permission must be set to **Allow** for the item and any branches to view their history. For more information, see [Permissions and groups reference](../../organizations/security/permissions.md).
 
-    tf branches itemspec [/version:versionspec] [/collection:TeamProjectCollectionUrl] [/login:username,[password]]
+```
+tf branches itemspec [/version:versionspec] [/collection:TeamProjectCollectionUrl] [/login:username,[password]]
+```
 
 ## Parameters<table>
 <thead>
@@ -44,11 +46,11 @@ To use the **branches** command, your **Read** permission must be set to **Allow
 </tr>
 <tr>
 <td><p><i>TeamProjectCollectionUrl</i></p></td>
-<td><p>The URL of the project collection that contains a file or folder in a branch for which you want to display the history (for example, http://myserver:8080/tfs/DefaultCollection).</p></td>
+<td><p>The URL of the project collection that contains a file or folder in a branch for which you want to display the history (for example, <a href="http://myserver:8080/tfs/DefaultCollection" data-raw-source="http://myserver:8080/tfs/DefaultCollection">http://myserver:8080/tfs/DefaultCollection</a>).</p></td>
 </tr>
 <tr>
 <td><p><i>username</i></p></td>
-<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <i>Domain</i>\<i>UserName</i> or <i>UserName</i>.</p></td>
+<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <i>Domain\UserName</i> or <i>UserName</i>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -80,29 +82,35 @@ The branches command tells you when an item has been the source or destination o
 
 For more information on how to find the **tf** command-line utility, see [Tf Command-Line Utility Commands](https://msdn.microsoft.com/library/z51z7zy0).
 
-Examples
------------------------------------------------------------------------------
-
+## Examples
 
 The following example displays branch history for the version-controlled file C:\\314.cs.
 
-    c:\projects>tf branches 314.cs
+```
+c:\projects>tf branches 314.cs
+```
 
 The following example displays branch history for the header.h item in the Team Foundation version control server.
 
-    c:\projects>tf branches $/applications/header.h
+```
+c:\projects>tf branches $/applications/header.h
+```
 
 The following example displays the branch history of the folder $/rel30/math.
 
-    c:\projects>tf branches $/rel30/math/
+```
+c:\projects>tf branches $/rel30/math/
+```
 
 The following example displays the branch history for WindowsApplication13-branch. The results indicate the history for the specified branch by using angle brackets.
 
-    D:\projects\ws1>tf branches WindowsApplication13-branch
-    $/jun16-1/WindowsApplication13
-    >>      $/jun16-1/WindowsApplication13-branch   Branched from version 3 <<
-                    $/jun16-1/WindowsApplication13-branch-prime     Branched from version 5
-            $/jun16-1/WindowsApplication13-branch2  Branched from version 3
+```
+D:\projects\ws1>tf branches WindowsApplication13-branch
+$/jun16-1/WindowsApplication13
+>>      $/jun16-1/WindowsApplication13-branch   Branched from version 3 <<
+                $/jun16-1/WindowsApplication13-branch-prime     Branched from version 5
+        $/jun16-1/WindowsApplication13-branch2  Branched from version 3
+```
 
 ## See Also
 

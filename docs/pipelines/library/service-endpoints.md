@@ -1,30 +1,30 @@
 ---
-title: Service connections in Azure Pipelines and Team Foundation Server
+title: Service connections in Azure Pipelines & TFS
 ms.custom: seodec18
 description: Service connections in Azure Pipelines and Team Foundation Server (TFS)
 ms.assetid: A40435C0-2053-4D99-9A75-CCB97FBB15D2
 ms.prod: devops
 ms.technology: devops-cicd
 ms.topic: conceptual
-ms.manager: douge
-ms.author: ahomer
-author: alexhomer1
-ms.date: 08/24/2018
+ms.manager: mijacobs
+ms.author: ronai
+author: RoopeshNair
+ms.date: 02/17/2020
 monikerRange: '>= tfs-2015'
 ---
 
-# Service connections for builds and releases
+# Service connections
 
-[!INCLUDE [version-tfs-2015-rtm](../_shared/version-tfs-2015-rtm.md)]
+[!INCLUDE [version-tfs-2015-rtm](../includes/version-tfs-2015-rtm.md)]
 
 ::: moniker range="<= tfs-2018"
 
-[!INCLUDE [temp](../_shared/concept-rename-note.md)]
+[!INCLUDE [temp](../includes/concept-rename-note.md)]
 
 ::: moniker-end
 
 You will typically need to connect to external and remote services to execute tasks
-for a build or deployment. For example, you may need to connect to your Microsoft Azure
+in a job. For example, you may need to connect to your Microsoft Azure
 subscription, to a different build server or file server, to an online continuous
 integration environment, or to services you install on remote computers.
 
@@ -46,63 +46,170 @@ Service connections are created at project scope. A service connection created i
 1. In Azure DevOps, open the **Service connections** page from the [project settings page](../../project/navigation/go-to-service-page.md#open-project-settings).
    In TFS, open the **Services** page from the "settings" icon in the top menu bar.
 
-2. Choose **+ New service connection** and select the type of service connection you need.
+1. Choose **+ New service connection** and select the type of service connection you need.
 
-3. Fill in the parameters for the service connection. The list of parameters differs for each  type of service connection - see the [following list](#ep-types).
-   For example, this is the default **Azure Resource Manager** connection dialog:
+1. Fill in the parameters for the service connection. The list of parameters differs for each type of service connection - see the [following list](#ep-types).
+   
+1. Decide if you want the service connection to be accessible for any pipeline by
+   setting the **Allow all pipelines to use this connection** option. This option allows pipelines
+   defined in YAML, which are not automatically authorized for service connections,
+   to use this service connection. See [Use a service connection](#use-connection).
 
-   ![Azure Resource Manager connection dialog](../release/_img/azure-rm-endpoint/azure-rm-endpoint-01.png)
+1. Choose **OK** to create the connection.
+For example, this is the default **Azure Resource Manager** connection dialog:
 
-4. Choose **OK** to create the connection.
+   ![Azure Resource Manager connection dialog](../release/media/azure-rm-endpoint/new-connection-01.png)
 
-> For more information about Azure Resource Manager service connections, see [Create an Azure service connection](connect-to-azure.md).
-> You can also create your own [custom service connections](../../extend/develop/service-endpoints.md).
+   > [!NOTE]
+   > The connection dialog may appear different for the different types of service connections, 
+   > and have different parameters. See the list of parameters in 
+   > [Common service connection types](#common-service-connection-types) for each
+   > service connection type.
+
+## Manage a service connection
+
+1. In Azure DevOps, open the **Service connections** page from the [project settings page](../../project/navigation/go-to-service-page.md#open-project-settings).
+   Or, in TFS, open the **Services** page from the "settings" icon in the top menu bar.
+
+1. Select the service connection you want to manage.
+
+1. You will land in the **Overview** tab of the service connection where you can see the details of the service connection i.e. type, creator, authentication type (like Token, Username/Password or OAuth etc.).
+![Azure Resource Manager connection overview](../release/media/azure-rm-endpoint/overview-page.png)
+
+1. Next to the overview tab, you can see **Usage history** that shows the list of pipelines using the service connection.
+![Azure Resource Manager usage history](../release/media/azure-rm-endpoint/usage-history.png)
+
+1. To update the service connection, click on **Edit** at the top-right corner of the page.
+
+1. **Approvals and checks**, **Security** and **Delete** are part of the more options at the top-right corner.
+![Azure Resource Manager more options](../release/media/azure-rm-endpoint/more-options.png)
 
 <a name="security"></a>
 
 ## Secure a service connection
 
-You can control who can define new service connections in a library, and who can use an existing service connection.
-**Roles** are defined for  service connections, and **membership** in these roles governs the operations you can perform on those service connections.
-
-| Role on a library service connection | Purpose |
-|------------------------------------|---------|
-| User | Members of this role can use the service connection when authoring build or release pipelines. |
-| Administrator | In addition to using the service connection, members of this role can manage membership of all other roles for the service connection. The user that created the service connection is automatically added to the Administrator role for that service connection.
-
-Two special groups for service connections, endpoint administrators and creators, are added to every project.
-Members of the administrators group can manage all service connections.
-By default, project administrators are added as members of this group.
-This group is also added as an administrator to every service connection created.
-Members of the creators group can create new service connections.
-By default, project contributors are added as members of this group.
-
-To modify the security for a connection:
+To manage the security for a connection:
 
 1. In Azure DevOps, open the **Service connections** page from the [project settings page](../../project/navigation/go-to-service-page.md#open-project-settings).
    In TFS, open the **Services** page from the "settings" icon in the top menu bar.
 
-1. Choose the **Roles** link to open the security tab.
+1. To manage user permissions at hub level, go to the more options at the top-right corner and choose **Security**.
+![Service connection hub security](../release/media/azure-rm-endpoint/service-connection-hub-security.png)
 
-   ![Editing the roles](_img/endpoint-roles.png)
+1. To manage security for a service connection, open the service connection and go to more options at top-right corner and choose **Security**.
+![Azure Resource Manager security](../release/media/azure-rm-endpoint/security.png)
 
-1. Add users or groups, turn on and off inheritance, or change the role for existing users and groups as required.
+Service connection is a critical resource for various workflows in Azure DevOps like Classic Build and Release pipelines, YAML pipelines, KevVault Variable groups etc. Based on the usage patterns, service connection security is divided into three categories in the service connections new UI.
+* User permissions
+* Pipeline permissions
+* Project permissions
 
-> For more information about securing an Azure Resource Manager service connection, see [Create an Azure service connection](connect-to-azure.md).
+### User permissions
+You can control who can create, view, use and manage the service connection with user permissions. You have four roles i.e. Creator, Reader, User and Administrator roles to manage each of these actions. In the service connections tab, you can set the hub level permissions which are inherited and you can override the roles for each service connection. 
+
+| Role on a service connection | Purpose |
+|------------------------------------|---------|
+| Creator | Members of this role can create the service connection in the project. Contributors are added as members by default|
+| Reader | Members of this role can view the service connection. |
+| User | Members of this role can use the service connection when authoring build or release pipelines or authorize yaml pipelines. |
+| Administrator | In addition to using the service connection, members of this role can manage membership of all other roles for the service connection in the project. Project administrators are added as members by default |
+
+Previously, two special groups, Endpoint Creators and Endpoint Administrator groups were used to control who can create and manage service connections. Now, as part of service connection new UI, we are moving to pure RBAC model i.e. using roles.
+For backward compatibility, in the existing projects, Endpoint Administrators group is added as Administrator role and Endpoint creators group is assigned with creator role which ensures there is no change in the behavior for existing service connections. 
+
+> [!NOTE]
+> This change is applicable only in Azure DevOps Services where new UI is available. 
+> Azure DevOps Server 2019 and older versions still follow the previous security model.
+
+Along with the new service connections UI, we are introducing **Sharing of service connections across projects**. With this feature, service connections now become an organization level object however scoped to current project by default. In User permissions section, you can see **Project** and **Organization** level permissions. And the functionalities of administrator role are split between the two levels.
+
+#### Project level permissions
+The project level permissions are the user permissions with reader, user, creator and administrator roles, as explained above, within the project scope. You have inheritance and you can set the roles at the hub level as well as for each service connection. 
+
+The project-level administrator has limited administrative capabilities as below:
+* A project-level administrator can manage other users and roles at project scope.
+* A project-level administrator can rename a service connection, update description and enable/disable "Allow pipeline access" flag.
+* A project-level administrator can delete a service connection which removes the existence of service connection from the project.
+
+![Azure Resource Manager project security](../release/media/azure-rm-endpoint/project-level-security.png)
+
+The user that created the service connection is automatically added to the project level Administrator role for that service connection. And users/groups assigned administrator role at hub level are inherited if the inheritance is turned on.
+
+#### Organization level permissions
+Organization level permissions are introduced along with cross project sharing feature. Any permissions set at this level are reflected across all the projects where the service connection is shared. There is not inheritance for organization level permissions. Today we only have administrator role at organization level.
+
+The organization-level administrator has all the administrative capabilities that include:
+* An organization-level administrator can manage organization level users.
+* An organization-level administrator can edit all the fields of a service connection.
+* An organization-level administrator can share/un-share a service connection with other projects.
+
+![Azure Resource Manager organization security](../release/media/azure-rm-endpoint/organization-security.png)
+
+The user that created the service connection is automatically added as an organization level Administrator role for that service connection. In all the existing service connections, for backward compatibility, all the connection administrators are made organization-level administrators to ensure there is no change in the behavior.
+
+
+### Pipeline permissions
+Pipeline permissions control which YAML pipelines are authorized to use this service connection. This is interlinked with 'Allow pipeline access' checkbox you find in service connection creation dialogue.
+
+You can either choose to open access for all pipelines to consume this service connection from the more options at top-right corner of the **Pipeline permissions** section in security tab of a service connection.
+
+Or you can choose to lock down the service connection and only allow selected YAML pipelines to consume this service connection. If any other YAML pipeline refers to this service connection, an authorization request is raised which has to be approved by the connection administrators.
+
+![Azure Resource Manager pipeline permissions](../release/media/azure-rm-endpoint/pipeline-permissions.png)
+
+### Project permissions - Cross project sharing of service connections
+Project permissions control which projects can use this service connection. By default, service connections are not shared with any other projects.
+
+* Only the organization-level administrators from **User permissions** can share the service connection with other projects.
+* The user who is sharing the service connection with a project should have atleast create service connection permission in the target project.
+* The user who shares the service connection with a project becomes the project-level administrator for that service connection  and the project-level inheritance is turned on in the target project.
+* The service connection name is appended with the project name and it can be renamed in the target project scope.
+* Organization level administrator can unshare a service connection from any shared project.
+
+![Azure Resource Manager project permissions](../release/media/azure-rm-endpoint/project-permissions.png)
+
+> [!NOTE]
+> The sharing feature is still under preview and is not yet rolled out. If you want this feature enabled, you can reach out to us.
+> Project permissions feature is dependent on the new service connections UI and once we enable this feature, the old service
+> connections UI is no longer usable.
+
+
+<a name="use-connection"></a>
 
 ## Use a service connection
 
 After the new service connection is created:
 
-* If you are using it in the UI, select the connection name you assigned in the **Azure subscription** (or the equivalent connection name) setting of your pipeline.
+# [YAML](#tab/yaml)
 
-  ![If you are using it in the UI](_img/ui-connection-setting.png)
+Copy the connection name into your code as the **azureSubscription** (or the equivalent connection name) value.
 
-* If you are using it in YAML, copy the connection name into your code as the **azureSubscription** (or the equivalent connection name) value.
+  ![If you are using it in YAML](media/yaml-connection-setting.png)
+# [Classic](#tab/classic)
 
-  ![If you are using it in YAML](_img/yaml-connection-setting.png)
+Select the connection name you assigned in the **Azure subscription** (or the equivalent connection name) setting of your pipeline.
+
+  ![If you are using it in the UI](media/ui-connection-setting.png)
+
+---
+
+Next you must authorize the service connection.
+To do this, or if you encounter a resource authorization error in your build,
+use one of the following techniques:
+
+- If you want to authorize any pipeline to use the service connection,
+  go to Azure Pipelines, open the Settings page, select Service connections,
+  and enable the setting **Allow all pipelines to use this connection** option for the connection.
+
+- If you want to authorize a service connection for a specific pipeline, open the pipeline
+  by selecting **Edit** and queue a build manually. You will see a resource authorization error
+  and an "Authorize resources" action on the error. Choose this action to explicitly add the pipeline as an
+  authorized user of the service connection.
 
 > You can also create your own [custom service connections](../../extend/develop/service-endpoints.md).
+
+> [!NOTE]
+> Service connection cannot be specified by variable
 
 <a name="ep-types"></a>
 
@@ -111,7 +218,7 @@ After the new service connection is created:
 Azure Pipelines and TFS support a variety of service connection types by default. Some of these are described below:
 
 * [Azure Classic service connection](#sep-azure-classic)
-* [Azure Resource Manager service connection](#sep-azure-rm)
+* [Azure Resource Manager service connection](#sep-azure-resource-manager)
 * [Azure Service Bus service connection](#sep-servbus)
 * [Bitbucket Cloud service connection](#sep-bbucket)
 * [Chef service connection](#sep-chef)
@@ -120,9 +227,10 @@ Azure Pipelines and TFS support a variety of service connection types by default
 * [External Git service connection](#sep-extgit)
 * [Generic service connection](#sep-generic)
 * [GitHub service connection](#sep-github)
-* [GitHub Enterprise service connection](#sep-githubent)
+* [GitHub Enterprise Server service connection](#sep-githubent)
 * [Jenkins service connection](#sep-jenkins)
 * [Kubernetes service connection](#sep-kuber)
+* [Maven service connection](#sep-maven)
 * [npm service connection](#sep-npm)
 * [NuGet service connection](#sep-nuget)
 * [Python package download service connection](#sep-python-download)
@@ -152,21 +260,21 @@ using Azure credentials or an Azure management certificate.
 | Subscription Name | Required. The name of your Microsoft Azure subscription (account). |
 | User name | Required for Credentials authentication. User name of a work or school account (for example @fabrikam.com). Microsoft accounts (for example @live or @hotmail) are not supported. |
 | Password | Required for Credentials authentication. Password for the user specified above. |
-| Management Certificate | Required for Certificate based authentication. Copy the value of the management certificate key from your [publish settings XML file](https://go.microsoft.com/fwlink/?LinkID=312990) or the Azure portal. |
+| Management Certificate | Required for Certificate-based authentication. Copy the value of the management certificate key from your [publish settings XML file](https://go.microsoft.com/fwlink/?LinkID=312990) or the Azure portal. |
 
 > If your subscription is defined in an [Azure Government Cloud](government-cloud.md), ensure your application meets the relevant compliance requirements before you configure a service connection.
 
 *****
 
-<a name="sep-azure-rm-conditions"></a>
+<a name="sep-azure-resource-manager-conditions"></a>
 <a name="arm-auto-connect"></a>
 <a name="arm-manual-connect"></a>
-<a name="sep-azure-rm-existingsp"></a>
+<a name="sep-azure-resource-manager-existingsp"></a>
 
-<h3 id="sep-azure-rm">Azure Resource Manager service connection</h3>
+<h3 id="sep-azure-resource-manager">Azure Resource Manager service connection</h3>
 
 Defines and secures a connection to a Microsoft Azure subscription
-using Service Principal Authentication (SPA) or an Azure Managed Service Identity.
+using Service Principal Authentication (SPA) or an Azure-Managed Service Identity.
 The dialog offers two main modes:
 
 * **Automated subscription detection**. In this mode, Azure Pipelines and TFS will attempt to query Azure for all of the subscriptions and instances to which you have access using the credentials you are currently logged on with in Azure Pipelines or TFS (including Microsoft accounts and School or Work accounts).
@@ -177,9 +285,10 @@ The dialog offers two main modes:
   Use this approach when you need to connect to an Azure account using different credentials from those you are currently logged on with in Azure Pipelines or TFS.
   This is also a useful way to maximize security and limit access.
 
-For more information, see [Create an Azure service connection](connect-to-azure.md)
+For more information, see [Connect to Microsoft Azure](connect-to-azure.md)
 
-**NOTE**: If you don't see any Azure subscriptions or instances, or you have problems validating the connection, see [Troubleshoot Azure Resource Manager service connections](../release/azure-rm-endpoint.md).
+> [!NOTE]
+> If you don't see any Azure subscriptions or instances, or you have problems validating the connection, see [Troubleshoot Azure Resource Manager service connections](../release/azure-rm-endpoint.md).
 
 *****
 
@@ -187,11 +296,13 @@ For more information, see [Create an Azure service connection](connect-to-azure.
 
 Defines and secures a connection to a Microsoft Azure Service Bus queue.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Service Bus ConnectionString | The URL of your Azure Service Bus instance. [More information](/azure/service-bus-messaging/service-bus-fundamentals-hybrid-solutions). |
-| Service Bus Queue Name | The name of an existing Azure Service Bus queue. |
+
+|          Parameter           |                                                                                                                                  Description                                                                                                                                   |
+|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|       Connection Name        | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+| Service Bus ConnectionString |                                                                    The URL of your Azure Service Bus instance. [More information](/azure/service-bus-messaging/service-bus-fundamentals-hybrid-solutions).                                                                     |
+|    Service Bus Queue Name    |                                                                                                                The name of an existing Azure Service Bus queue.                                                                                                                |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -227,9 +338,9 @@ You can use the following PowerShell script to obtain a Base64-encoded represent
 
 *****
 
-<h3 id="sep-bbucket">Bitbucket service connection</h3>
+<h3 id="sep-bbucket">Bitbucket Cloud service connection</h3>
 
-Defines a connection to a Bitbucket server.
+Defines a connection to Bitbucket Cloud.
 
 | Parameter | Description |
 | --------- | ----------- |
@@ -271,18 +382,28 @@ Defines and secures a connection to a Docker host.
 Ensure you protect your connection to the Docker host. [Learn more](https://docs.docker.com/engine/security/https/).
 
 [How do I create a new service connection?](#create-new)
- 
+
 *****
 
 <h3 id="sep-docreg">Docker Registry service connection</h3>
 
-Defines and secures a connection to a Docker registry.
+Defines a connection to a container registry.
+
+**Azure Container Registry**
 
 | Parameter | Description |
 | --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription**, **endpoint**, or the equivalent name value in the script. |
-| Docker Registry | Required. The URL of the Docker registry. A default value is provided. |
-| Docker ID | Required. The identifier of the Docker account user. For Azure Container Registry, this is likely to be a service principal. |
+| Connection Name | Required. The name you will use to refer to this service connection in task inputs. |
+| Azure subscription | Required. The Azure subscription containing the container registry to be used for service connection creation. |
+| Azure Container Registry | Required. The Azure Container Registry to be used for creation of service connection. |
+
+**Docker Hub or Others**
+
+| Parameter | Description |
+| --------- | ----------- |
+| Connection Name | Required. The name you will use to refer to this service connection in task inputs. |
+| Docker Registry | Required. The URL of the Docker registry. |
+| Docker ID | Required. The identifier of the Docker account user. |
 | Password | Required. The password for the account user identified above. |
 | Email | Optional. An email address to receive notifications. |
 
@@ -294,7 +415,7 @@ Defines and secures a connection to a Docker registry.
 
 Defines and secures a connection to a Git repository server.
 Note that there is a specific service connection for [GitHub](#sep-github)
-and [GitHub Enterprise](#sep-githubent) connections.
+and [GitHub Enterprise Server](#sep-githubent) connections.
 
 | Parameter | Description |
 | --------- | ----------- |
@@ -328,13 +449,15 @@ Defines and secures a connection to any other type of service or application.
 
 Defines a connection to a GitHub repository.
 Note that there is a specific service connection for [External Git servers](#sep-extgit)
-and [GitHub Enterprise](#sep-githubent) connections.
+and [GitHub Enterprise Server](#sep-githubent) connections.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Choose authorization | Required. Either **Grant authorization** or **Personal access token**. See notes below. |
-| Token | Required for Personal access token authorization. See notes below. |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+
+|      Parameter       |                                                                                                                                  Description                                                                                                                                   |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Choose authorization |                                                                                            Required. Either **Grant authorization** or **Personal access token**. See notes below.                                                                                             |
+|        Token         |                                                                                                       Required for Personal access token authorization. See notes below.                                                                                                       |
+|   Connection Name    | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -358,23 +481,25 @@ Also see [Artifact sources](../release/artifacts.md#tfvcsource).
 
 *****
 
-<h3 id="sep-githubent">GitHub Enterprise service connection</h3>
+<h3 id="sep-githubent">GitHub Enterprise Server service connection</h3>
 
 Defines a connection to a GitHub repository.
 Note that there is a specific service connection for [External Git servers](#sep-extgit)
 and [standard GitHub service connections](#sep-github).
 
-| Parameter | Description |
-| --------- | ----------- |
-| Choose authorization | Required. Either **Personal access token**, **Username and Password**, or **OAuth2**. See notes below. |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Server URL | Required. The URL of the service. |
-| Accept untrusted SSL certificates | Set this option to allow clients to accept a self-signed certificate instead of installing the certificate in the TFS service role or the computers hosting the [agent](../agents/agents.md). |
-| Token | Required for Personal access token authorization. See notes below. |
-| User name | Required for Username and Password authentication. The username to connect to the service. |
-| Password | Required for Username and Password authentication. The password for the specified username. |
-| OAuth configuration | Required for OAuth2 authorization. The OAuth configuration specified in your account. |
-| GitHub Enterprise configuration URL| The URL is fetched from OAuth configuration. |
+
+|                 Parameter                  |                                                                                                                                  Description                                                                                                                                   |
+|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|            Choose authorization            |                                                                                     Required. Either **Personal access token**, **Username and Password**, or **OAuth2**. See notes below.                                                                                     |
+|              Connection Name               | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|                 Server URL                 |                                                                                                                       Required. The URL of the service.                                                                                                                        |
+|     Accept untrusted SSL certificates      |                                         Set this option to allow clients to accept a self-signed certificate instead of installing the certificate in the TFS service role or the computers hosting the [agent](../agents/agents.md).                                          |
+|                   Token                    |                                                                                                       Required for Personal access token authorization. See notes below.                                                                                                       |
+|                 User name                  |                                                                                           Required for Username and Password authentication. The username to connect to the service.                                                                                           |
+|                  Password                  |                                                                                          Required for Username and Password authentication. The password for the specified username.                                                                                           |
+|            OAuth configuration             |                                                                                             Required for OAuth2 authorization. The OAuth configuration specified in your account.                                                                                              |
+| GitHub Enterprise Server configuration URL |                                                                                                                  The URL is fetched from OAuth configuration.                                                                                                                  |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -398,31 +523,96 @@ GitHub account in your profile:
 
 Defines a connection to the Jenkins service.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Server URL | Required. The URL of the service. |
-| Accept untrusted SSL certificates | Set this option to allow clients to accept a self-signed certificate instead of installing the certificate in the TFS service role or the computers hosting the [agent](../agents/agents.md). |
-| User name | Required. The username to connect to the service. |
-| Password | Required. The password for the specified username. |
+
+|             Parameter             |                                                                                                                                  Description                                                                                                                                   |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|          Connection Name          | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|            Server URL             |                                                                                                                       Required. The URL of the service.                                                                                                                        |
+| Accept untrusted SSL certificates |                                         Set this option to allow clients to accept a self-signed certificate instead of installing the certificate in the TFS service role or the computers hosting the [agent](../agents/agents.md).                                          |
+|             User name             |                                                                                                               Required. The username to connect to the service.                                                                                                                |
+|             Password              |                                                                                                               Required. The password for the specified username.                                                                                                               |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
 
-Also see [Azure Pipelines Integration with Jenkins](https://blogs.msdn.microsoft.com/visualstudioalm/2017/04/25/vsts-visual-studio-team-services-integration-with-jenkins/) 
+Also see [Azure Pipelines Integration with Jenkins](https://devblogs.microsoft.com/devops/vsts-visual-studio-team-services-integration-with-jenkins/) 
 and [Artifact sources](../release/artifacts.md#jenkinssource).
 
 *****
 
 <h3 id="sep-kuber">Kubernetes service connection</h3>
 
-Defines and secures a connection to a [Kubernetes](https://kubernetes.io/docs/home/) automation account.
+Defines a connection to a Kubernetes cluster.
+
+**Azure subscription option**
 
 | Parameter | Description |
 | --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Server URL | Required. The URL of the Kubernetes automation service. |
-| Kubeconfig | The contents of the kubectl configuration file. |
+| Connection Name | Required. The name you will use to refer to this service connection in task inputs. |
+| Azure subscription | Required. The Azure subscription containing the cluster to be used for service connection creation.  |
+| Cluster | Name of the Azure Kubernetes Service cluster. |
+| Namespace | Namespace within the cluster. |
+
+For an RBAC enabled cluster, a ServiceAccount is created in the chosen namespace along with RoleBinding object so that the created ServiceAccount is able to perform actions only on the chosen namespace.
+
+For an RBAC disabled cluster, a ServiceAccount is created in the chosen namespace. But the created ServiceAccount has cluster-wide privileges (across namespaces).
+
+**Service account option**
+
+| Parameter | Description |
+| --------- | ----------- |
+| Connection Name | Required. The name you will use to refer to this service connection in task inputs. |
+| Server URL | Required. Cluster's API server URL.  |
+| Secret | Secret associated with the service account to be used for deployment |
+
+The following command can be used to fetch Server URL - 
+
+```
+kubectl config view --minify -o 'jsonpath={.clusters[0].cluster.server}'
+```
+For fetching Secret object required to connect and authenticate with the cluster, the following sequence of commands need to be run -
+
+```
+kubectl get serviceAccounts <service-account-name> -n <namespace> -o 'jsonpath={.secrets[*].name}'
+```   
+
+The above command fetches the name of the secret associated with a ServiceAccount. The output of the above command is to be substituted in the following command for fetching Secret object - 
+
+```
+kubectl get secret <service-account-secret-name> -n <namespace> -o yaml
+```
+
+Copy and paste the Secret object fetched in YAML form into the Secret text-field.
+
+> [!NOTE]
+> When using the service account option, [ensure that a RoleBinding exists](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#kubectl-create-rolebinding), which grants permissions in the `edit` `ClusterRole` to the desired service account. This is needed so that the service account can be used by Azure Pipelines for creating objects in the chosen namespace.
+
+**Kubeconfig option**
+
+| Parameter | Description |
+| --------- | ----------- |
+| Connection Name | Required. The name you will use to refer to this service connection in task inputs. |
+| Kubeconfig | Required. Contents of the kubeconfig file  |
+| Context | Context within the kubeconfig file that is to be used for identifying the cluster |
+
+[How do I create a new service connection?](#create-new)
+
+*****
+
+<h3 id="sep-maven">Maven service connection</h3>
+
+Defines and secures a connection to a Maven repository.
+
+|       Parameter       |                                                                                                                                  Description                                                                                                                                   |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    Connection Name    | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|     Registry URL      |                                                                                                                      Required. The URL of the Maven repository.                                                                                                                      |
+|     Registry Id       |                                                                                           Required. This is the ID of the server that matches the id element of the repository/mirror that Maven tries to connect to.                                                           |
+|       Username        |                                                                                          Required when connection type is **Username and Password**. The username for authentication.                                                                                          |
+|       Password        |                                                                                           Required when connection type is **Username and Password**. The password for the username.                                                                                           |
+| Personal Access Token |                                  Required when connection type is **Authentication Token**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md).                                   |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -433,13 +623,15 @@ Defines and secures a connection to a [Kubernetes](https://kubernetes.io/docs/ho
 
 Defines and secures a connection to an npm server.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Registry URL | Required. The URL of the npm server. |
-| Username | Required when connection type is **Username and Password**. The username for authentication. |
-| Password | Required when connection type is **Username and Password**. The password for the username. |
-| Personal Access Token | Required when connection type is **External Azure Pipelines**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md). |
+
+|       Parameter       |                                                                                                                                  Description                                                                                                                                   |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    Connection Name    | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|     Registry URL      |                                                                                                                      Required. The URL of the npm server.                                                                                                                      |
+|       Username        |                                                                                          Required when connection type is **Username and Password**. The username for authentication.                                                                                          |
+|       Password        |                                                                                           Required when connection type is **Username and Password**. The password for the username.                                                                                           |
+| Personal Access Token |                                  Required when connection type is **External Azure Pipelines**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md).                                   |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -450,14 +642,16 @@ Defines and secures a connection to an npm server.
 
 Defines and secures a connection to a NuGet server.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Feed URL | Required. The URL of the NuGet server. |
-| ApiKey | Required when connection type is **ApiKey**. The authentication key. |
-| Personal Access Token | Required when connection type is **External Azure Pipelines**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md). |
-| Username | Required when connection type is **Basic authentication**. The username for authentication. |
-| Password | Required when connection type is **Basic authentication**. The password for the username. |
+
+|       Parameter       |                                                                                                                                  Description                                                                                                                                   |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    Connection Name    | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|       Feed URL        |                                                                                                                     Required. The URL of the NuGet server.                                                                                                                     |
+|        ApiKey         |                                                                                                      Required when connection type is **ApiKey**. The authentication key.                                                                                                      |
+| Personal Access Token |                                  Required when connection type is **External Azure Pipelines**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md).                                   |
+|       Username        |                                                                                          Required when connection type is **Basic authentication**. The username for authentication.                                                                                           |
+|       Password        |                                                                                           Required when connection type is **Basic authentication**. The password for the username.                                                                                            |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -468,13 +662,15 @@ Defines and secures a connection to a NuGet server.
 
 Defines and secures a connection to a Python repository for downloading Python packages.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Python repository url for download | Required. The URL of the Python repository. |
-| Personal Access Token | Required when connection type is **Authentication Token**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md). |
-| Username | Required when connection type is **Username and Password**. The username for authentication. |
-| Password | Required when connection type is **Username and Password**. The password for the username. |
+
+|             Parameter              |                                                                                                                                  Description                                                                                                                                   |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|          Connection Name           | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+| Python repository url for download |                                                                                                                  Required. The URL of the Python repository.                                                                                                                   |
+|       Personal Access Token        |                                    Required when connection type is **Authentication Token**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md).                                     |
+|              Username              |                                                                                          Required when connection type is **Username and Password**. The username for authentication.                                                                                          |
+|              Password              |                                                                                           Required when connection type is **Username and Password**. The password for the username.                                                                                           |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -485,14 +681,16 @@ Defines and secures a connection to a Python repository for downloading Python p
 
 Defines and secures a connection to a Python repository for uploading Python packages.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Python repository url for upload | Required. The URL of the Python repository. |
-| EndpointName | Required. Unique repository name used for twine upload. Spaces and special characters are not allowed. |
-| Personal Access Token | Required when connection type is **Authentication Token**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md). |
-| Username | Required when connection type is **Username and Password**. The username for authentication. |
-| Password | Required when connection type is **Username and Password**. The password for the username. |
+
+|            Parameter             |                                                                                                                                  Description                                                                                                                                   |
+|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|         Connection Name          | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+| Python repository url for upload |                                                                                                                  Required. The URL of the Python repository.                                                                                                                   |
+|           EndpointName           |                                                                                     Required. Unique repository name used for twine upload. Spaces and special characters are not allowed.                                                                                     |
+|      Personal Access Token       |                                    Required when connection type is **Authentication Token**. The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md).                                     |
+|             Username             |                                                                                          Required when connection type is **Username and Password**. The username for authentication.                                                                                          |
+|             Password             |                                                                                           Required when connection type is **Username and Password**. The password for the username.                                                                                           |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -503,17 +701,19 @@ Defines and secures a connection to a Python repository for uploading Python pac
 
 Defines and secures a connection to a Service Fabric cluster.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Cluster Endpoint  | Required. The TCP endpoint of the cluster. |
-| Server Certificate Thumbprint | Required when connection type is **Certificate based** or **Azure Active Directory**. |
-| Client Certificate | Required when connection type is **Certificate based**. |
-| Password | Required when connection type is **Certificate based**. The certificate password. |
-| Username | Required when connection type is **Azure Active Directory**. The username for authentication. |
-| Password | Required when connection type is **Azure Active Directory**. The password for the username. |
-| Use Windows security | Required when connection type is **Others**. |
-| Cluster SPN | Required when connection type is **Others** and using Windows security. |
+
+|           Parameter           |                                                                                                                                  Description                                                                                                                                   |
+|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        Connection Name        | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|       Cluster Endpoint        |                                                                                                                   Required. The TCP endpoint of the cluster.                                                                                                                   |
+| Server Certificate Thumbprint |                                                                                             Required when connection type is **Certificate based** or **Azure Active Directory**.                                                                                              |
+|      Client Certificate       |                                                                                                            Required when connection type is **Certificate based**.                                                                                                             |
+|           Password            |                                                                                               Required when connection type is **Certificate based**. The certificate password.                                                                                                |
+|           Username            |                                                                                         Required when connection type is **Azure Active Directory**. The username for authentication.                                                                                          |
+|           Password            |                                                                                          Required when connection type is **Azure Active Directory**. The password for the username.                                                                                           |
+|     Use Windows security      |                                                                                                                  Required when connection type is **Others**.                                                                                                                  |
+|          Cluster SPN          |                                                                                                    Required when connection type is **Others** and using Windows security.                                                                                                     |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -524,14 +724,16 @@ Defines and secures a connection to a Service Fabric cluster.
 
 Defines and secures a connection to a remote host using Secure Shell (SSH).
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Host name | Required. The name of the remote host machine or the IP address. |
-| Port number | Required. The port number of the remote host machine to which you want to connect. The default is port 22. |
-| User name | Required. The username to use when connecting to the remote host machine. |
-| Password or passphrase | The password or passphrase for the specified username if using a keypair as credentials. |
-| Private key | The entire contents of the private key file if using this type of authentication. |
+
+|       Parameter        |                                                                                                                                  Description                                                                                                                                   |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    Connection Name     | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|       Host name        |                                                                                                        Required. The name of the remote host machine or the IP address.                                                                                                        |
+|      Port number       |                                                                                   Required. The port number of the remote host machine to which you want to connect. The default is port 22.                                                                                   |
+|       User name        |                                                                                                   Required. The username to use when connecting to the remote host machine.                                                                                                    |
+| Password or passphrase |                                                                                            The password or passphrase for the specified username if using a keypair as credentials.                                                                                            |
+|      Private key       |                                                                                               The entire contents of the private key file if using this type of authentication.                                                                                                |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -545,14 +747,16 @@ and [Copy Files Over SSH](../tasks/deploy/copy-files-over-ssh.md).
 
 Defines and secures a connection to the Subversion repository.
 
-| Parameter | Description |
-| --------- | ----------- |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Server repository URL | Required. The URL of the repository. |
-| Accept untrusted SSL certificates | Set this option to allow the client to accept self-signed certificates installed on the agent computer(s). |
-| Realm name | Optional. If you use multiple credentials in a build or release pipeline, use this parameter to specify the realm containing the credentials specified for this service connection. |
-| User name | Required. The username to connect to the service. |
-| Password | Required. The password for the specified username. |
+
+|             Parameter             |                                                                                                                                  Description                                                                                                                                   |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|          Connection Name          | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|       Server repository URL       |                                                                                                                      Required. The URL of the repository.                                                                                                                      |
+| Accept untrusted SSL certificates |                                                                                   Set this option to allow the client to accept self-signed certificates installed on the agent computer(s).                                                                                   |
+|            Realm name             |                                              Optional. If you use multiple credentials in a build or release pipeline, use this parameter to specify the realm containing the credentials specified for this service connection.                                               |
+|             User name             |                                                                                                               Required. The username to connect to the service.                                                                                                                |
+|             Password              |                                                                                                               Required. The password for the specified username.                                                                                                               |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -563,14 +767,16 @@ Defines and secures a connection to the Subversion repository.
 
 Defines and secures a connection to another TFS or Azure DevOps organization.
 
-| Parameter | Description |
-| --------- | ----------- |
-| (authentication) | Select **Basic** or **Token Based** authentication. |
-| Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| Connection URL | Required. The URL of the TFS or Azure Pipelines instance. |
-| User name | Required for Basic authentication. The username to connect to the service. |
-| Password | Required for Basic authentication. The password for the specified username. |
-| Personal Access Token | Required for Token Based authentication (TFS 2017 and newer and Azure Pipelines only). The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md). |
+
+|       Parameter       |                                                                                                                                  Description                                                                                                                                   |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|   (authentication)    |                                                                                                              Select **Basic** or **Token Based** authentication.                                                                                                               |
+|    Connection Name    | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
+|    Connection URL     |                                                                                                           Required. The URL of the TFS or Azure Pipelines instance.                                                                                                            |
+|       User name       |                                                                                                   Required for Basic authentication. The username to connect to the service.                                                                                                   |
+|       Password        |                                                                                                  Required for Basic authentication. The password for the specified username.                                                                                                   |
+| Personal Access Token |                      Required for Token Based authentication (TFS 2017 and newer and Azure Pipelines only). The token to use to authenticate with the service. [Learn more](../../organizations/accounts/use-personal-access-tokens-to-authenticate.md).                       |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -585,10 +791,12 @@ See also [Authenticate access with personal access tokens for Azure DevOps and T
 
 Defines and secures a connection to Visual Studio App Center.
 
-| Parameter | Description |
-| --------- | ----------- |
+
+|    Parameter    |                                                                                                                                  Description                                                                                                                                   |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Connection Name | Required. The name you will use to refer to this service connection in task properties. This is not the name of your Azure account or subscription. If you are using YAML, use this name as the **azureSubscription** or the equivalent subscription name value in the script. |
-| API Token | Required. The token to use to authenticate with the service. [Learn more](/appcenter/api-docs/). |
+|    API Token    |                                                                                        Required. The token to use to authenticate with the service. [Learn more](/appcenter/api-docs/).                                                                                        |
+
 <p />
 
 [How do I create a new service connection?](#create-new)
@@ -603,12 +811,11 @@ available through extensions are:
 
 * [TFS artifacts for Azure Pipelines](https://marketplace.visualstudio.com/items?itemName=ms-vscs-rm.vss-services-externaltfs).
   Deploy on-premises TFS builds with Azure Pipelines
-  through a TFS service connection
-  connection and the **Team Build (external)** artifact,
+  through a TFS service connection and the **Team Build (external)** artifact,
   even when the TFS machine is not reachable directly
   from Azure Pipelines. For more information, see
   [External TFS](../release/artifacts.md#onpremtfssource) and
-  [this blog post](https://blogs.msdn.microsoft.com/visualstudioalm/2016/04/05/deploy-artifacts-from-onprem-tfs-server-with-release-management-service/).
+  [this blog post](https://devblogs.microsoft.com/devops/deploy-artifacts-from-onprem-tfs-server-with-release-management-service/).
 
 * [TeamCity artifacts for Azure Pipelines](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.vss-services-teamcity).
   This extension provides integration with TeamCity through a TeamCity service connection,
@@ -630,4 +837,4 @@ available through extensions are:
 
 > You can also create your own [custom service connections](../../extend/develop/service-endpoints.md).
 
-[!INCLUDE [rm-help-support-shared](../_shared/rm-help-support-shared.md)]
+[!INCLUDE [rm-help-support-shared](../includes/rm-help-support-shared.md)]

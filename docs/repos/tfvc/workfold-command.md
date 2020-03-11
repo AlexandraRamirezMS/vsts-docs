@@ -5,9 +5,9 @@ description: Workfold Command
 ms.assetid: f4d18139-bd2e-4621-be4e-a761ca537280
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: reference
 ms.date: 08/10/2016
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Workfold Command
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 Creates, modifies, or displays information about the mappings between your workspace folders and the folders on the server for Team Foundation version control.
 
@@ -24,24 +24,38 @@ Creates, modifies, or displays information about the mappings between your works
 
 To use the **workfold** command, you must be the owner of the specified or implied workspace or have the global **Administer workspaces** permission set to **Allow**. For more information, see [Permissions and groups reference](../../organizations/security/permissions.md).
 
-    tf workfold localfolder [/login:username,[password]]
+```
+tf workfold localfolder [/login:username,[password]]
+```
 
-    tf workfold [/workspace:workspacename] [/login:username,[password]]
+```
+tf workfold [/workspace:workspacename] [/login:username,[password]]
+```
 
-    tf workfold [/collection:TeamProjectCollectionUrl] [/workspace:workspacename] [/login:username,[password]]
-    serverfolder
+```
+tf workfold [/collection:TeamProjectCollectionUrl] [/workspace:workspacename] [/login:username,[password]]
+serverfolder
+```
 
-    tf workfold [/map serverfolder localfolder] [/collection:TeamProjectCollectionUrl] 
-    [/workspace:workspacename][/login:username,[password]
+```
+tf workfold [/map serverfolder localfolder] [/collection:TeamProjectCollectionUrl] 
+[/workspace:workspacename][/login:username,[password]
+```
 
-    tf workfold /unmap [/collection:TeamProjectCollectionUrl] [/workspace:workspacename] 
-    [/recursive] (serverfolder|localfolder) [/login:username,[password]]
+```
+tf workfold /unmap [/collection:TeamProjectCollectionUrl] [/workspace:workspacename] 
+[/recursive] (serverfolder|localfolder) [/login:username,[password]]
+```
 
-    tf workfold /cloak 
-    serverfolder [/workspace:workspacename] [/collection:TeamProjectCollectionUrl] [/login:username,[password]]
+```
+tf workfold /cloak 
+serverfolder [/workspace:workspacename] [/collection:TeamProjectCollectionUrl] [/login:username,[password]]
+```
 
-    tf workfold /decloak serverfolder
-    [/workspace:workspacename] [/collection:TeamProjectCollectionUrl][/login:username,[password]]
+```
+tf workfold /decloak serverfolder
+[/workspace:workspacename] [/collection:TeamProjectCollectionUrl][/login:username,[password]]
+```
 
 ## Parameters<table>
 <thead>
@@ -65,11 +79,11 @@ To use the **workfold** command, you must be the owner of the specified or impli
 </tr>
 <tr>
 <td><p><i>TeamProjectCollectionUrl</i></p></td>
-<td><p>The URL of the project collection that contains the folders that you want to compare with server folders (for example, http://myserver:8080/tfs/DefaultCollection/).</p></td>
+<td><p>The URL of the project collection that contains the folders that you want to compare with server folders (for example, <a href="http://myserver:8080/tfs/DefaultCollection/" data-raw-source="http://myserver:8080/tfs/DefaultCollection/">http://myserver:8080/tfs/DefaultCollection/</a>).</p></td>
 </tr>
 <tr>
 <td><p><i>username</i></p></td>
-<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <i>DOMAIN</i>\<i>UserName</i> or <i>UserName</i>.</p></td>
+<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <i>DOMAIN\UserName</i> or <i>UserName</i>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -134,11 +148,15 @@ By default, workspace mappings are applied recursively. When you map a local fol
 
 In this example, you can use a wildcard, "\*", to map a server folder and its immediate items to your local workspace:
 
-    tf workfold $/projects/MyTeamProject/* C:\MyLocalWorkfold\MyTeamProject
+```
+tf workfold $/projects/MyTeamProject/* C:\MyLocalWorkfold\MyTeamProject
+```
 
 In this example, you can override the automatically-created mapping between $/projects/project\_one and C:\\projects\\project\_one by using the **workfold** command as follows:
 
-    tf workfold $/projects/project_one C:\DifferentWorkfold
+```
+tf workfold $/projects/project_one C:\DifferentWorkfold
+```
 
 ### Mappings under Cloaks
 
@@ -147,19 +165,27 @@ Mappings of uncloaked folders that are located beneath a cloaked folder in the v
 ## Examples
 The following example displays the mappings for the workspace in which c:\\projects resides.
 
-    c:\projects>tf workfold
+```
+c:\projects>tf workfold
+```
 
 The following example cloaks the c:\\projects\\lib folder.
 
-    c:\projects>tf workfold /cloak c:\projects\lib
+```
+c:\projects>tf workfold /cloak c:\projects\lib
+```
 
 The following example displays the mapping for the local file word.cs.
 
-    c:\projects>tf workfold word.cs
+```
+c:\projects>tf workfold word.cs
+```
 
 The following example maps the folder C:\\DifferentWorkfold to the Team Foundation version control server folder $/projects/project\_one and replaces the previous workspace mapping for the $/projects/project\_one Team Foundation version control server folder.
 
-    c:\projects>tf workfold $/projects/project_one C:\DifferentWorkfold
+```
+c:\projects>tf workfold $/projects/project_one C:\DifferentWorkfold
+```
 
 ## See Also
 

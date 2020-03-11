@@ -5,12 +5,12 @@ description: Share code in a Git repo and a new team project
 ms.assetid: 
 ms.prod: devops
 ms.technology: devops-new-user
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.date: 09/10/2018
 ms.topic: quickstart
-monikerRange: 'vsts'
+monikerRange: '>= tfs-2018'
 ---
 
 # Code with Git
@@ -31,7 +31,7 @@ In this article, we'll show you how to start working with your code in Azure Rep
 Install one of the following Git command-line tools:
 
   - To install Git for Windows, including Git Credential Manager, see [Install Git Credential Manager for Windows](../git/set-up-credential-managers.md#windows).
-  - To install Git for macOS and Linux, see [Install Git Credential Manager for macOS and Linux](../git/set-up-credential-managers.md#macos-and-linux).
+  - To install on macOS or Linux, check out the [Installing Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) chapter in the open-source _Pro Git_ book. For macOS and Linux, we recommend [configuring SSH authentication](../git/use-ssh-keys-to-authenticate.md)
 
 ## Get your code
 
@@ -71,17 +71,15 @@ After the repository is cloned, we'll show you how to add your existing code to 
 
 To work with a Git repo, you clone it to your computer. Cloning a repo creates a complete local copy of the repo for you to work with. Cloning also downloads all [commits](../git/commits.md) and [branches](../git/branches.md) in the repo and sets up a named relationship with the repo on the server. Use this relationship to interact with the existing repo, pushing and pulling changes to share code with your team.
 
-[!INCLUDE [temp](../../_shared/new-navigation-cloud.md)]
-
-# [New navigation](#tab/new-nav)
+::: moniker range=">= azure-devops-2019"
 
 1. From your web browser, open the team project for your organization and select **Repos** > **Files**. If you don't have a team project, [create one now](sign-up-invite-teammates.md). 
 
-   ![Repos files](_img/clone-repo/repos-files.png)
+   ![Repos files](media/clone-repo/repos-files.png)
 
 2. Select **Clone** in the upper-right corner of the **Files** window and copy the clone URL.
 
-   ![Retrieve the clone URL](_img/clone-repo/clone-repo.png)
+   ![Retrieve the clone URL](media/clone-repo/clone-repo.png)
 
 3. Open the Git command window (Git Bash on Git for Windows) and browse to the folder where you want the code from the repo stored on your computer. Run `git clone` followed by the path copied from the **Clone URL** in the previous section, as shown in the following example.
 
@@ -97,15 +95,17 @@ To work with a Git repo, you clone it to your computer. Cloning a repo creates a
    cd fabrikam-web
    ```
 
-  Keep this command window open, because you'll use it in the following steps.
+   Keep this command window open, because you'll use it in the following steps.
 
-# [Previous navigation](#tab/previous-nav)
+::: moniker-end
+
+::: moniker range="<= tfs-2018"
 
 1. From your web browser, open the team project for your organization and select the **Code** page. If you don't have a team project, [create one now](sign-up-invite-teammates.md). 
 
 2. Select **Clone** in the upper-right corner of the **Code** page and copy the **Clone URL**.
 
-   ![Retrieve the clone URL](../../user-guide/_img/code-with-git-clone-repo.png)
+   ![Retrieve the clone URL](../../user-guide/media/code-with-git-clone-repo.png)
 
 3. Open the Git command window (Git Bash on Git for Windows) and browse to the folder where you want the code from the repo stored on your computer. Run `git clone` followed by the path copied from the **Clone URL** in the previous section, as shown in the following example.
 
@@ -121,9 +121,9 @@ To work with a Git repo, you clone it to your computer. Cloning a repo creates a
    cd SmartHotel360
    ```
 
-  Keep this command window open, because you'll use it in the following steps.
+   Keep this command window open, because you'll use it in the following steps.
 
----
+::: moniker-end
 
 ## Work in a branch
 
@@ -197,47 +197,48 @@ Pull requests combine the review and merge of your code into a single collaborat
 
 This example shows the basic steps of creating and completing a pull request.
 
-# [New navigation](#tab/new-nav)
+::: moniker range=">= azure-devops-2019"
 
 1. From your web browser, open the team project for your organization and select **Repos** > **Files**. If you kept your browser open after getting the clone URL, you can just switch back to it.
 
-   ![Repos files](_img/clone-repo/repos-files.png)
+   ![Repos files](media/clone-repo/repos-files.png)
 
 2. Select **Create a pull request** in the upper-right corner of the **Files** window. If you don't see a message like **You updated users/jamal/feature1 just now**, refresh your browser.
 
-   ![Create a pull request](_img/updated-file-create-pull-request.png)
+   ![Create a pull request](media/updated-file-create-pull-request.png)
 
 3. New pull requests are configured to merge your branch into the default branch, which in this example is `master`. The title and description are pre-populated with your commit message.
 
-   ![New pull request](_img/create-pull-request.png)
+   ![New pull request](media/create-pull-request.png)
 
    You can [add reviewers](../git/pull-requests.md#add-and-remove-reviewers) and [link work items](../git/pull-requests.md#link-work-items) to your pull request.
 
    You can review the files included in the pull request at the bottom of the **New Pull Request** window.
 
-   ![Files in the pull request](_img/create-pull-request-files.png)
+   ![Files in the pull request](media/create-pull-request-files.png)
 
    Select **Create** to create the pull request.
 
 4. You can view the details of your pull request from the **Overview** tab, and view the changed files, updates, and commits in your pull request from the other tabs. Select **Complete** to begin the process of completing the pull request.
 
-   ![Pull request](_img/pull-request.png)
+   ![Pull request](media/pull-request.png)
 
 5. Select **Complete merge** to complete the pull request and merge your code into the `master` branch.
 
-   ![Complete pull request](_img/complete-pull-request.png)
+   ![Complete pull request](media/complete-pull-request.png)
 
 >[!NOTE]
 >This example shows the basic steps of creating and completing a pull request. To learn more about pull requests, including voting and reviewing, commenting, autocomplete, and more, see [Pull requests overview](../git/pull-requests-overview.md).
 
+::: moniker-end
 
-# [Previous navigation](#tab/previous-nav)
+::: moniker range="<= tfs-2018"
 
 1. From your web browser, open the team project for your organization and select the **Code** page. If you don't have a team project, [create one now](sign-up-invite-teammates.md). 
 
 2. Select **Clone** in the upper-right corner of the **Code** page and copy the **Clone URL**.
 
-   ![Retrieve the clone URL](../../user-guide/_img/code-with-git-clone-repo.png)
+   ![Retrieve the clone URL](../../user-guide/media/code-with-git-clone-repo.png)
 
 3. Open the Git command window (Git Bash on Git for Windows) and browse to the folder where you want the code from the repo stored on your computer. Run `git clone` followed by the path copied from the **Clone URL** in the previous section, as shown in the following example.
 
@@ -253,9 +254,9 @@ This example shows the basic steps of creating and completing a pull request.
    cd fabrikam-web
    ```
 
-  Keep this command window open, because you'll use it in the following steps.
+   Keep this command window open, because you'll use it in the following steps.
 
----
+::: moniker-end
 
 Your changes are now merged into the `master` branch, and your `users/jamal/feature1` branch is deleted on the remote repository. To delete your local copy of the branch, switch back to your Git Bash command prompt and run the following commands.
 

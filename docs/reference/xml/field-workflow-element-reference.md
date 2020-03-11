@@ -5,14 +5,15 @@ description: Syntax and usage of the FIELD element used to specify rules and con
 ms.prod: devops
 ms.technology: devops-agile
 ms.assetid: 62ee6ea1-bb55-4462-93ff-224ad799812a
-ms.manager: douge
-ms.author: kaelliauthor: KathrynEE
+ms.manager: mijacobs
+ms.author: kaelli
+author: KathrynEE
 ms.date: 02/10/2017
 ---
 
 # FIELD (Workflow) element reference
 
-[!INCLUDE [temp](../../_shared/customization-phase-0-and-1-plus-version-header.md)]
+[!INCLUDE [temp](../../includes/customization-phase-0-and-1-plus-version-header.md)]
 
 You use the **FIELD** (Workflow) element to specify the rules and conditions that apply to a field during a state change or workflow transition. The rule is applied based on where the **FIELD** (Workflow) element appears under the `STATE`, `TRANSITION`, `DEFAULTREASON`, or `REASON` element of which its parent `FIELDS` element is a child. To learn more, see [Q: Where should I apply a field rule?](https://msdn.microsoft.com/vstudio/ms404857(v=vs.98).aspx)  
   
@@ -22,29 +23,29 @@ You use the **FIELD** (Workflow) element to specify the rules and conditions tha
 ## Syntax  
   
 > [!div class="tabbedCodeSnippets"]
-```XML
-<FIELD refname="fieldReferenceName">  
-   <ALLOWEDVALUES> . . . </ALLOWEDVALUES>  
-   <ALLOWEXISTINGVALUE />  
-   <CANNOTLOSEVALUE />  
-   <COPY />  
-   <DEFAULT />  
-   <EMPTY />  
-   <FROZEN />  
-   <MATCH />  
-   <NOTSAMEAS />  
-   <PROHIBITEDVALUES /> . . . </PROHIBITEDVALUES>  
-   <READONLY />  
-   <REQUIRED />  
-   <SERVERDEFAULT />  
-   <SUGGESTEDVALUES /> . . . </SUGGESTEDVALUES>  
-   <VALIDUSER />  
-   <WHEN> . . . </WHEN>  
-   <WHENNOT> . . . </WHENNOT>  
-   <WHENCHANGED> . . . </WHENCHANGED>  
-   <WHENNOTCHANGED> . . . </WHENNOTCHANGED>  
-<FIELD>  
-```  
+> ```XML
+> <FIELD refname="fieldReferenceName">  
+>    <ALLOWEDVALUES> . . . </ALLOWEDVALUES>  
+>    <ALLOWEXISTINGVALUE />  
+>    <CANNOTLOSEVALUE />  
+>    <COPY />  
+>    <DEFAULT />  
+>    <EMPTY />  
+>    <FROZEN />  
+>    <MATCH />  
+>    <NOTSAMEAS />  
+>    <PROHIBITEDVALUES /> . . . </PROHIBITEDVALUES>  
+>    <READONLY />  
+>    <REQUIRED />  
+>    <SERVERDEFAULT />  
+>    <SUGGESTEDVALUES /> . . . </SUGGESTEDVALUES>  
+>    <VALIDUSER />  
+>    <WHEN> . . . </WHEN>  
+>    <WHENNOT> . . . </WHENNOT>  
+>    <WHENCHANGED> . . . </WHENCHANGED>  
+>    <WHENNOTCHANGED> . . . </WHENNOTCHANGED>  
+> <FIELD>  
+> ```  
   
 ## Attributes and elements  
  The following sections describe attributes, child elements, and parent elements.  

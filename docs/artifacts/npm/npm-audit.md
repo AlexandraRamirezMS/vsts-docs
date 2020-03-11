@@ -3,12 +3,12 @@ title: Use npm audit with Azure Artifacts
 description: Use npm audit within Azure DevOps Services with Azure Artifacts
 ms.prod: devops
 ms.technology: devops-artifacts
-ms.manager: douge
-ms.author: elbatk
-author: elbatk
+ms.manager: mijacobs
+ms.author: phwilson
+author: chasewilson
 ms.topic: conceptual
 ms.date: 11/30/2018
-monikerRange: 'vsts'
+monikerRange: 'azure-devops'
 ---
 
 # Use npm audit
@@ -38,11 +38,11 @@ steps:
     customCommand: 'audit --registry=https://registry.npmjs.org/'
 ```
 
-# [Designer](#tab/designer)
+# [Classic](#tab/classic)
 
 Adding the **npm** task and select _custom_ as the Command:
 
-![Custom npm task form with the audit command in the Command and Arguments field](_img/npm-audit-task.png)
+![Custom npm task form with the audit command in the Command and Arguments field](media/npm-audit-task.png)
 
 ---
 

@@ -5,19 +5,19 @@ ms.assetid: e10d1cad-ebea-43ed-92ac-3391e5119fe7
 ms.prod: devops
 ms.technology: devops-test
 ms.topic: conceptual
-ms.manager: douge
-ms.author: ahomer
-author: alexhomer1
+ms.manager: mijacobs
+ms.author: sdanie
+author: steved0x
 ms.date: 12/07/2018
 monikerRange: '>= tfs-2015'
 ---
 
 # Testing Microsoft Store apps
 
-[!INCLUDE [version-inc-vs](../_shared/version-inc-vs.md)]
+[!INCLUDE [version-inc-vs](../includes/version-inc-vs.md)]
 
 >[!NOTE]
->[!INCLUDE [mtm-deprecate-message](../_shared/mtm-deprecate-message.md)]
+>[!INCLUDE [mtm-deprecate-message](../includes/mtm-deprecate-message.md)]
 
 You have two options if you want to test Microsoft Store apps on a phone, tablet, or other device:  
   
@@ -27,7 +27,7 @@ You have two options if you want to test Microsoft Store apps on a phone, tablet
   
 - Couple the device to your computer, and run the tests using Microsoft Test Manager. This option allows you to capture screenshots and [collect diagnostic data](collect-more-diagnostic-data-in-manual-tests.md) from the device.  
 
-[!INCLUDE [feature-availability](../_shared/feature-availability.md)] 
+[!INCLUDE [feature-availability](../includes/feature-availability.md)] 
   
 ### Prepare the Windows device for testing  
   
@@ -48,29 +48,29 @@ You have two options if you want to test Microsoft Store apps on a phone, tablet
   
    [Create some test cases](plan-manual-tests-with-microsoft-test-manager.md) if you haven't already done so.  
   
-1. On the **Run Tests** page, choose the **Modify** link next to **Perform tests using:** to specify the remote Windows device.  
+2. On the **Run Tests** page, choose the **Modify** link next to **Perform tests using:** to specify the remote Windows device.  
   
-   ![Select where to run your manual test](_img/testing-windows-store-apps/mtr_win8_whererun.png)  
+   ![Select where to run your manual test](media/testing-windows-store-apps/mtr_win8_whererun.png)  
   
-1. Choose the **Remote device** option and enter the name of the device that you want to test.  
+3. Choose the **Remote device** option and enter the name of the device that you want to test.  
   
-   ![Select where to run test](_img/testing-windows-store-apps/mtr_win8_whererun2.png)  
+   ![Select where to run test](media/testing-windows-store-apps/mtr_win8_whererun2.png)  
   
-   By default, port 6905 is used by Microsoft Test Manager to communicate with remote devices. If you want to use a different port, enter the remote device as *deviceName***:***port*. For example, `mySlateDevice1:8001`.  You must also change the port on the remote device by opening the service configuration file mttaservice.exe.config in the Visual Studio installation folder.  
+   By default, port 6905 is used by Microsoft Test Manager to communicate with remote devices. If you want to use a different port, enter the remote device as <em>deviceName</em>**:**<em>port</em>. For example, `mySlateDevice1:8001`.  You must also change the port on the remote device by opening the service configuration file mttaservice.exe.config in the Visual Studio installation folder.  
   
-1. Choose the **Test** link to verify that Microsoft Test Manager can communicate with the remote device.  
+4. Choose the **Test** link to verify that Microsoft Test Manager can communicate with the remote device.  
   
 ### Install your Microsoft Store app  
   
 1. Choose **Install Microsoft Store App**, and then enter the path and name of the .appx file for the Microsoft Store app that you want to install.  
   
-   ![Install Microsoft Store app from Microsoft Test Manager](_img/testing-windows-store-apps/mtr_win8_installwindowsstyleapp.png)  
+   ![Install Microsoft Store app from Microsoft Test Manager](media/testing-windows-store-apps/mtr_win8_installwindowsstyleapp.png)  
   
 1. Follow the steps in the installation wizard.  
   
-   ![Tailored Application Installation Steps](_img/testing-windows-store-apps/mtr_win8_tailoredappinstallstepsdialog.png)  
+   ![Tailored Application Installation Steps](media/testing-windows-store-apps/mtr_win8_tailoredappinstallstepsdialog.png)  
   
-   ![Test certificate dialog](_img/testing-windows-store-apps/mtr_win8_testcertdialog.png)  
+   ![Test certificate dialog](media/testing-windows-store-apps/mtr_win8_testcertdialog.png)  
   
 ### Test your Microsoft Store app  
   
@@ -97,4 +97,4 @@ You have two options if you want to test Microsoft Store apps on a phone, tablet
 
 Verify that the share location where the .appx file and certificates are stored is properly secured.
   
-[!INCLUDE [help-and-support-footer](../_shared/help-and-support-footer.md)] 
+[!INCLUDE [help-and-support-footer](../includes/help-and-support-footer.md)] 

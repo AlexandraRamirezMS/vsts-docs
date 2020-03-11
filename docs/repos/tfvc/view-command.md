@@ -5,9 +5,9 @@ description: Retrieve a file using the TFVC View Command for Azure DevOps Servic
 ms.assetid: d67fcb55-6f54-434f-ba05-4564f976b8d9
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: reference
 ms.date: 08/10/2016
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # View Command
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 The **view** command retrieves a specific version of a file to a temporary folder on your computer and displays it.
 
@@ -24,9 +24,12 @@ The **view** command retrieves a specific version of a file to a temporary folde
 
 To use the **view** command, you must have the **Read** permission set to **Allow**. For more information, see [Permissions and groups reference](../../organizations/security/permissions.md).
 
-    tf view [/collection:TeamProjectCollectionUrl] [/console] [/recursive] [/output:localfile]
-    [/shelveset:shelvesetname[;owner]] [/noprompt] itemspec 
-    [/version:versionspec] [/login:username,[password]]
+```
+tf view [/collection:TeamProjectCollectionUrl] [/console] [/recursive] [/output:localfile]
+[/shelveset:shelvesetname[;owner]] [/noprompt] itemspec 
+[/version:versionspec] [/login:username,[password]]
+```
+
 ## Parameters<table>
 <thead>
 <tr>
@@ -37,7 +40,7 @@ To use the **view** command, you must have the **Read** permission set to **Allo
 <tbody>
 <tr>
 <td><p><em>TeamProjectCollectionUrl</em></p></td>
-<td><p>The URL of the project collection that contains a specific version of a file about which you want to retrieve information (for example, http://myserver:8080/tfs/DefaultCollection).</p></td>
+<td><p>The URL of the project collection that contains a specific version of a file about which you want to retrieve information (for example, <a href="http://myserver:8080/tfs/DefaultCollection" data-raw-source="http://myserver:8080/tfs/DefaultCollection">http://myserver:8080/tfs/DefaultCollection</a>).</p></td>
 </tr>
 <tr>
 <td><p><em>shelvesetname [:owner]</em></p></td>
@@ -49,10 +52,10 @@ To use the **view** command, you must have the **Read** permission set to **Allo
 <div class="alert">
 <div class="mtps-table" xmlns="http://www.w3.org/1999/xhtml">
 <div class="mtps-row">
-**Note**
+<strong>Note</strong>
 </div>
 <div class="mtps-row">
-You can specify more than one *Itemspec* argument. 
+You can specify more than one <em>Itemspec</em> argument. 
 </div>
 </div>
 </div></td>
@@ -63,7 +66,7 @@ You can specify more than one *Itemspec* argument.
 </tr>
 <tr>
 <td><p><em>username</em></p></td>
-<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <em>DOMAIN</em>\<em>UserName</em> or <em>UserName</em>.</p></td>
+<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <em>DOMAIN</em>&lt;em&gt;UserName</em> or <em>UserName</em>.</p></td>
 </tr>
 <tr>
 <td><p><em>localfile</em></p></td>
@@ -115,7 +118,7 @@ You can specify more than one *Itemspec* argument.
 </tbody>
 </table>
 ## Remarks
-The **view** command of the **tf** command-line utility retrieves a read-only copy of a file from the Team Foundation version control server to a temporary folder on your computer and displays its contents. Unless you specify a particular version, Team Foundation retrieves the latest version of the file from the Team Foundation version control server.
+The <strong>view</strong> command of the <strong>tf</strong> command-line utility retrieves a read-only copy of a file from the Team Foundation version control server to a temporary folder on your computer and displays its contents. Unless you specify a particular version, Team Foundation retrieves the latest version of the file from the Team Foundation version control server.
 
 The **view** command does not retrieve files into your workspace or check them out. See [Get Command](get-command.md) and [Checkout and Edit Commands](checkout-or-edit-command.md) for more information about how to get the Team Foundation version control server version of and check out files.
 
@@ -133,19 +136,27 @@ Finally, you can redirect the contents of a file to standard out using **|** or 
 ## Examples
 The following example displays the latest version of the file 314.c.
 
-    c:\projects>tf view 314.c
+```
+c:\projects>tf view 314.c
+```
 
 The following example displays the version of 314.c that was checked in with changeset 1999.
 
-    c:\projects>tf view /version:C1999 314.c
+```
+c:\projects>tf view /version:C1999 314.c
+```
 
 The following example retrieves version 5 of 314.c and writes it to the file 314.old.
 
-    c:\projects>tf view /version:5 314.c > 314.old
+```
+c:\projects>tf view /version:5 314.c > 314.old
+```
 
 The following example displays the latest version of each file that matches the wildcard "\*.cs".
 
-    c:\projects>tf view *.cs
+```
+c:\projects>tf view *.cs
+```
 
 ## See Also
 

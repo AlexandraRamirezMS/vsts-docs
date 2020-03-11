@@ -6,22 +6,24 @@ ms.assetid: 4CC6002E-9EF6-448C-AD48-5C618C103950
 ms.prod: devops
 ms.technology: devops-cicd
 ms.topic: conceptual
-ms.manager: douge
-ms.author: ahomer
-author: alexhomer1
-ms.date: 12/18/18
+ms.manager: mijacobs
+ms.author: ronai
+author: RoopeshNair
+ms.date: 12/18/2018
 monikerRange: '>= tfs-2017'
 ---
 
-# Create an Azure service connection
+# Connect to Microsoft Azure
 
-[!INCLUDE [version-tfs-2017-rtm](../_shared/version-tfs-2017-rtm.md)]
+[!INCLUDE [version-tfs-2017-rtm](../includes/version-tfs-2017-rtm.md)]
 
-[!INCLUDE [temp](../_shared/concept-rename-note.md)]
+[!INCLUDE [temp](../includes/concept-rename-note.md)]
 
 To deploy your app to an Azure resource (to an app service or to a virtual machine), you need an Azure Resource Manager service connection. 
 
-::: moniker range="vsts"
+> For other types of connection, and general information about creating and using connections, see [Service connections for builds and releases](service-endpoints.md).
+
+::: moniker range="azure-devops"
 
 ## Create an Azure Resource Manager service connection using automated security
 
@@ -30,13 +32,14 @@ We recommend this simple approach if:
 * You're signed in as the owner of the Azure Pipelines organization and the Azure subscription.
 * You don't need to further limit the permissions for Azure resources accessed through the service connection.
 * You're not connecting to [Azure Stack](#connect-stack) or an [Azure Government Cloud](#connect-govt).
+* You're not connecting from Azure DevOps Server 2019 or earlier versions of TFS
 
 1. In Azure DevOps, open the **Service connections** page from the [project settings page](../../project/navigation/go-to-service-page.md#open-project-settings).
    In TFS, open the **Services** page from the "settings" icon in the top menu bar.
 
 1. Choose **+ New service connection** and select **Azure Resource Manager**.
 
-   ![Choosing a service connection type](_img/new-service-endpoint-2.png)
+   ![Choosing a service connection type](media/new-service-endpoint-2.png)
 
 1. Specify the following parameters.
 
@@ -50,12 +53,12 @@ We recommend this simple approach if:
 
 1. After the new service connection is created:
 
-   * If you're using the designer, select the connection name you assigned in the **Azure subscription** setting of your pipeline.
+   * If you're using the classic editor, select the connection name you assigned in the **Azure subscription** setting of your pipeline.
    * If you're using YAML, copy the connection name into your code as the `azureSubscription` value.
 
 1. To deploy to a specific Azure resource, the task will need additional data about that resource.
 
-   * If you're using the designer, select data you need. For example, the App service name.
+   * If you're using the classic editor, select data you need. For example, the App service name.
    * If you're using YAML, then go to the resource in the Azure portal, and then copy the data into your code. For example, to deploy a web app, you would copy the name of the App Service into the `WebAppName` value.
 
 See also: [Troubleshoot Azure Resource Manager service connection](../release/azure-rm-endpoint.md).
@@ -72,19 +75,19 @@ or a [VM with a managed service identity](#use-msi).
 
 1. If you want to use a pre-defined set of access permissions, and you don't already have a suitable service principal defined, follow one of these tutorials to create a new service principal:
 
-   * [Use the portal to create an Azure Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal)
-   * [How to create and test Azure Service Principal using Azure CLI](https://blogs.msdn.microsoft.com/arsen/2016/05/11/how-to-create-and-test-azure-service-principal-using-azure-cli/)
+   * [Use the portal to create an Azure Active Directory application and a service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal)
+   * [Use Azure PowerShell to create an Azure service principal with a certificate](/azure/active-directory/develop/howto-authenticate-service-principal-powershell)   
 
 1. In Azure DevOps, open the **Service connections** page from the [project settings page](../../project/navigation/go-to-service-page.md#open-project-settings).
    In TFS, open the **Services** page from the "settings" icon in the top menu bar.
 
 1. Choose **+ New service connection** and select **Azure Resource Manager**.
 
-   ![Choosing a service connection type](_img/new-service-endpoint-2.png)
+   ![Choosing a service connection type](media/new-service-endpoint-2.png)
 
 1. Switch from the simplified version of the dialog to the full version using the link in the dialog.
 
-   ![Opening the full version of the service  dialog](_img/rm-endpoint-link.png)
+   ![Opening the full version of the service  dialog](media/rm-endpoint-link.png)
 
 1. Enter a user-friendly **Connection name** to use when referring to this service connection.
 
@@ -97,16 +100,17 @@ or a [VM with a managed service identity](#use-msi).
    * If you choose **Subscription**, select an existing Azure subscription. If you don't see any Azure subscriptions or instances, see [Troubleshoot Azure Resource Manager service connections](../release/azure-rm-endpoint.md). |
    * If you choose **Management Group**, select an existing Azure management group. See [Create management groups](/azure/azure-resource-manager/management-groups-create). |
 
-1. Download and run [this PowerShell script](https://github.com/Microsoft/vsts-rm-extensions/blob/master/TaskModules/powershell/Azure/SPNCreation.ps1) in an Azure PowerShell window.
-   When prompted, enter your subscription name, password, role (optional), and the type of cloud such as Azure Cloud (the default), Azure Stack, or an Azure Government Cloud.
-
-1. Copy these fields from the output of the PowerShell script into the Azure subscription dialog textboxes:
+1. Enter the information about your service principal into the Azure subscription dialog textboxes:
 
    * Subscription ID
    * Subscription name
    * Service principal ID
    * Either the service principal client key or, if you have selected **Certificate**, enter the contents of both the certificate and private key sections of the *.pem file.
    * Tenant ID<p/>
+
+   You can obtain this information if you don't have it to hand by downloading and running
+   [this PowerShell script](https://github.com/Microsoft/vsts-rm-extensions/blob/master/TaskModules/powershell/Azure/SPNCreation.ps1) in an Azure PowerShell window.
+   When prompted, enter your subscription name, password, role (optional), and the type of cloud such as Azure Cloud (the default), Azure Stack, or an Azure Government Cloud.
 
 1. Choose **Verify connection** to validate the settings you entered.
 
@@ -117,7 +121,7 @@ or a [VM with a managed service identity](#use-msi).
 
 1. If required, modify the service principal to expose the appropriate permissions. For more details, see 
    [Use Role-Based Access Control to manage access to your Azure subscription resources](/azure/role-based-access-control/role-assignments-portal).
-   [This blog post](http://blogs.msdn.com/b/visualstudioalm/archive/2015/10/04/automating-azure-resource-group-deployment-using-a-service-principal-in-visual-studio-online-build-release-management.aspx)
+   [This blog post](https://blogs.msdn.com/b/visualstudioalm/archive/2015/10/04/automating-azure-resource-group-deployment-using-a-service-principal-in-visual-studio-online-build-release-management.aspx)
    also contains more information about using service principal authentication.
 
 See also: [Troubleshoot Azure Resource Manager service connections](../release/azure-rm-endpoint.md).
@@ -137,11 +141,11 @@ such as Key Vault, instead of persisting credentials in Azure DevOps for the con
 
 1. Choose **+ New service connection** and select **Azure Resource Manager**.
 
-   ![Choosing a service connection type](_img/new-service-endpoint-2.png)
+   ![Choosing a service connection type](media/new-service-endpoint-2.png)
 
 1. Select the **Managed Identity Authentication** option.
 
-   ![Opening the managed service identity settings](_img/rm-endpoint-msi.png)
+   ![Opening the managed service identity settings](media/rm-endpoint-msi.png)
 
 1. Enter a user-friendly **Connection name** to use when referring to this service connection.
 
@@ -184,4 +188,4 @@ For information about connecting to Azure Stack, see:
 * [Connect Azure Stack to Azure using VPN](/azure/azure-stack/azure-stack-connect-vpn)
 * [Connect Azure Stack to Azure using ExpressRoute](/azure/azure-stack/azure-stack-connect-expressroute)
 
-[!INCLUDE [rm-help-support-shared](../_shared/rm-help-support-shared.md)]
+[!INCLUDE [rm-help-support-shared](../includes/rm-help-support-shared.md)]

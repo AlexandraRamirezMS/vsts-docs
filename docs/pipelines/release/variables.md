@@ -1,24 +1,29 @@
 ---
-title: Release variables  and debugging
+title: Release variables and debugging
 ms.custom: seodec18
 description: Understand release variables in Azure Pipelines and Team Foundation Server (TFS)
 ms.assetid: 864FEB87-FE29-446D-804E-AD6ABDEA82C3
 ms.prod: devops
 ms.technology: devops-cicd
 ms.topic: conceptual
-ms.manager: douge
-ms.author: ahomer
-author: alexhomer1
+ms.manager: mijacobs
+ms.author: ronai
+author: RoopeshNair
 ms.date: 08/24/2018
 monikerRange: '>= tfs-2015'
 ---
 
-# Default and custom release variables and debugging
+# Release variables and debugging
 
-[!INCLUDE [version-tfs-2015-rtm](../_shared/version-tfs-2015-rtm.md)]
+[!INCLUDE [version-tfs-2015-rtm](../includes/version-tfs-2015-rtm.md)]
 
 ::: moniker range="<= tfs-2018"
-[!INCLUDE [temp](../_shared/concept-rename-note.md)]
+[!INCLUDE [temp](../includes/concept-rename-note.md)]
+::: moniker-end
+
+::: moniker range="azure-devops"
+> [!NOTE] 
+> This topic covers classic release pipelines. To understand variables in YAML pipelines, see [variables](../process/variables.md).
 ::: moniker-end
 
 As you compose the tasks for deploying your application into each stage in your DevOps CI/CD processes, variables will help you to:
@@ -30,7 +35,7 @@ and the value of this variable can be changed from one stage
 to another. These are **custom variables**.
 
 * Use information about the context of the particular release,
-[stage](environments.md), [artifacts](artifacts.md), or
+[stage](../process/stages.md), [artifacts](artifacts.md), or
 [agent](../agents/agents.md) in which the deployment pipeline is
 being run. For example, your script may need access to the location
 of the build to download it, or to the working directory on the
@@ -70,13 +75,16 @@ Using custom variables at project, release pipeline, and stage scope helps you t
   all occurrences as one operation.
 
 * Store sensitive values in a way that they cannot be seen
-  or changed by users of the release pipelines. Designate a  configuration property to be a secure (secret) variable by selecting the ![padlock](_img/padlock-icon.png) (padlock) icon next to the variable.
+  or changed by users of the release pipelines. Designate a  configuration property to be a secure (secret) variable by selecting the ![padlock](media/padlock-icon.png) (padlock) icon next to the variable.
 
   >The values of hidden (secret) variables are stored securely on
   the server and cannot be viewed by users after they are saved.
   During a deployment, the Azure Pipelines release service
   decrypts these values when referenced by the tasks and passes them
   to the agent over a secure HTTPS channel.
+
+> [!NOTE]
+> Creating custom variables can overwrite standard variables. For example, the PowerShell **Path** environment variable. If you create a custom `Path` variable on a Windows agent, it will overwrite the `$env:Path` variable and PowerShell won't be able to run.
 
 ### Using custom variables
 
@@ -85,12 +93,12 @@ variable name in parentheses and precede it with a **$** character. For example,
 if you have a variable named **adminUserName**, you can insert the current
 value of that variable into a parameter of a task as `$(adminUserName)`.
 
-[!INCLUDE [variable-collision](../_shared/variable-collision.md)]
+[!INCLUDE [variable-collision](../includes/variable-collision.md)]
 
 You can use custom variables to prompt for values during the execution of a release.
 For more details, see [Approvals](approvals/index.md#scenarios).
  
-[!INCLUDE [set-variables-in-scripts](../_shared/set-variables-in-scripts.md)]
+[!INCLUDE [set-variables-in-scripts](../includes/set-variables-in-scripts.md)]
 
 ## Default variables
 
@@ -140,30 +148,30 @@ To view the full list, see [View the current values of all variables](#view-vars
 
 | Variable name | Description |
 |---------------|-------------|
-| Release.DefinitionName | The name of the release pipeline to which the current release belongs.<br/><br />Example: `fabrikam-cd` |
-| Release.DefinitionId | The ID of the release pipeline to which the current release belongs. Not available in TFS 2015.<br/><br />Example: `1` |
-| Release.ReleaseName | The name of the current release.<br/><br />Example: `Release-47` |
-| Release.ReleaseId | The identifier of the current release record.<br/><br />Example: `118` |
-| Release.ReleaseUri | The URI of current release.<br/><br />Example: `vstfs://ReleaseManagement/Release/118` |
-| Release.ReleaseDescription | The text description provided at the time of the release.<br/><br />Example: `Critical security patch` |
-| Release.RequestedFor | The display name of identity that triggered the release.<br/><br />Example: `Mateo Escobedo` |
-| Release.RequestedForEmail | The email address of identity that triggered the release.<br/><br />Example: `mateo@fabrikam.com` |
-| Release.RequestedForId | The ID of identity that triggered the release.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab` |
-| Release.EnvironmentName | The name of stage to which deployment is currently in progress.<br/><br />Example: `Dev` |
-| Release.EnvironmentId | The ID of the stage instance in a release to which the deployment is currently in progress.<br/><br />Example: `276` |
-| Release.EnvironmentUri | The URI of the stage instance in a release to which deployment is currently in progress.<br/><br />Example: `vstfs://ReleaseManagement/Environment/276` |
-| Release.DefinitionEnvironmentId | The ID of the stage in the corresponding release pipeline. Not available in TFS 2015.<br/><br />Example: `1` |
 | Release.AttemptNumber | The number of times this release is deployed in this stage. Not available in TFS 2015.<br/><br />Example: `1` |
+| Release.DefinitionEnvironmentId | The ID of the stage in the corresponding release pipeline. Not available in TFS 2015.<br/><br />Example: `1` |
+| Release.DefinitionId | The ID of the release pipeline to which the current release belongs. Not available in TFS 2015.<br/><br />Example: `1` |
+| Release.DefinitionName | The name of the release pipeline to which the current release belongs.<br/><br />Example: `fabrikam-cd` |
 | Release.Deployment.RequestedFor | The display name of the identity that triggered (started) the deployment currently in progress. Not available in TFS 2015.<br/><br />Example: `Mateo Escobedo` |
 | Release.Deployment.RequestedForId | The ID of the identity that triggered (started) the deployment currently in progress. Not available in TFS 2015.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab` |
 | Release.DeploymentID | The ID of the deployment. Unique per job.<br/><br />Example: `254` |
 | Release.DeployPhaseID | The ID of the phase where deployment is running.<br/><br />Example: `127` |
+| Release.EnvironmentId | The ID of the stage instance in a release to which the deployment is currently in progress.<br/><br />Example: `276` |
+| Release.EnvironmentName | The name of stage to which deployment is currently in progress.<br/><br />Example: `Dev` |
+| Release.EnvironmentUri | The URI of the stage instance in a release to which deployment is currently in progress.<br/><br />Example: `vstfs://ReleaseManagement/Environment/276` |
 | Release.Environments.{stage-name}.status | The deployment status of the stage.<br/><br />Example: `InProgress` |
+| Release.PrimaryArtifactSourceAlias | The alias of the primary artifact source<br/><br />Example: `fabrikam\_web` |
+| Release.Reason | The reason for the deployment. Supported values are:<br>`ContinuousIntegration` - the release started in Continuous Deployment after a build completed.<br>`Manual` - the release started manually.<br>`None` - the deployment reason has not been specified.<br>`Scheduled` - the release started from a schedule. | 
+| Release.ReleaseDescription | The text description provided at the time of the release.<br/><br />Example: `Critical security patch` |
+| Release.ReleaseId | The identifier of the current release record.<br/><br />Example: `118` |
+| Release.ReleaseName | The name of the current release.<br/><br />Example: `Release-47` |
+| Release.ReleaseUri | The URI of current release.<br/><br />Example: `vstfs://ReleaseManagement/Release/118` |
 | Release.ReleaseWebURL | The URL for this release.<br/><br />Example: `https://dev.azure.com/fabrikam/f3325c6c/_release?releaseId=392&_a=release-summary` |
+| Release.RequestedFor | The display name of identity that triggered the release.<br/><br />Example: `Mateo Escobedo` |
+| Release.RequestedForEmail | The email address of identity that triggered the release.<br/><br />Example: `mateo@fabrikam.com` |
+| Release.RequestedForId | The ID of identity that triggered the release.<br/><br />Example: `2f435d07-769f-4e46-849d-10d1ab9ba6ab` |
 | Release.SkipArtifactDownload | Boolean value that specifies whether or not to skip downloading of artifacts to the agent.<br/><br />Example: `FALSE` |
 | Release.TriggeringArtifact.Alias | The alias of the artifact which triggered the release. This is empty when the release was scheduled or triggered manually.<br/><br />Example: `fabrikam\_app` |
-| Release.PrimaryArtifactSourceAlias | The alias of the primary artifact source<br/><br />Example: `fabrikam\_web` |
-| Release.Reason | The reason for the deployment. Supported values are:<br>`automated` - the release started in Continuous Deployment after a build completed.<br>`manual` - the release started manually.<br>`none` - the deployment reason has not been specified.<br>`scheduled` - the release started from a schedule. | 
 
 <!-- Other hidden variables
 [RELEASE_RELEASEWEBURL] -> [https://dev.azure.com/adventwrks/79f5c12e-3337-4151-be41-a268d2c73344/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?releaseId=118&_a=release-summary]
@@ -252,13 +260,13 @@ You can directly use a default variable as an input to a task.
 For example, to pass `Release.Artifacts.{Artifact alias}.DefinitionName` for the artifact source whose alias is **ASPNET4.CI** to a task,
 you would use `$(Release.Artifacts.ASPNET4.CI.DefinitionName)`.
 
-![Using artifact variables in arguments to a PowerShell Script task](_img/variables-01.png)
+![Using artifact variables in arguments to a PowerShell Script task](media/variables-01.png)
 
 To use a default variable in your script, you must first replace the `.` in the default variable names with `_`.
 For example, to print the value of artifact variable `Release.Artifacts.{Artifact alias}.DefinitionName` for the artifact source whose alias is **ASPNET4.CI** in a Powershell script,
 you would use `$env:RELEASE_ARTIFACTS_ASPNET4_CI_DEFINITIONNAME`.
 
-![Using artifact variables in an inline PowerShell script](_img/variables-02.png)
+![Using artifact variables in an inline PowerShell script](media/variables-02.png)
 
 Note that the original name of the artifact source alias, `ASPNET4.CI`, is replaced by `ASPNET4_CI`.
 
@@ -266,14 +274,14 @@ Note that the original name of the artifact source alias, `ASPNET4.CI`, is repla
 
 ### View the current values of all variables
 
-1. Open the pipelines view of thr summary for the release, and choose the stage you are interested in.
+1. Open the pipelines view of the summary for the release, and choose the stage you are interested in.
    In the list of steps, choose **Initialize job**.
 
-   ![Opening the log for a release](_img/view-variable-values-link.png)
+   ![Opening the log for a release](media/view-variable-values-link.png)
 
 1. This opens the log for this step. Scroll down to see the values used by the agent for this job.   
 
-   ![Viewing the values of the variables in a release](_img/view-variable-values.png)
+   ![Viewing the values of the variables in a release](media/view-variable-values.png)
 
 <a name="debug-mode"></a>
 
@@ -299,4 +307,4 @@ release stage, in debug mode. This can help you resolve issues and failures.
 >If you get an error related to an Azure RM service connection,
 see [How to: Troubleshoot Azure Resource Manager service connections](azure-rm-endpoint.md).
 
-[!INCLUDE [rm-help-support-shared](../_shared/rm-help-support-shared.md)]
+[!INCLUDE [rm-help-support-shared](../includes/rm-help-support-shared.md)]

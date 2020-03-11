@@ -5,7 +5,7 @@ description: Understand how using the Team Foundation plug-in to Project differs
 ms.prod: devops
 ms.technology: devops-agile
 ms.assetid: 786a9a22-0e34-4a70-b589-ae2def789e06
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: kaelli
 author: KathrynEE
 ms.topic: conceptual
@@ -14,7 +14,7 @@ ms.date: 01/12/2017
 
 # Operational differences in managing projects using TFS and Project
 
-[!INCLUDE [temp](../../_shared/tfs-ps-sync-header.md)]
+[!INCLUDE [temp](../../includes/tfs-ps-sync-header.md)]
 
 <a name="Top"></a> You can schedule projects by using the features that are available in Microsoft Project or Microsoft Project Professional, while maintaining the data and tracking work in Visual Studio Team Foundation Server (TFS). If you have Project Server deployed, you can best manage your enterprise project plans by installing Team Foundation Server Extensions for Project Server.  
   
@@ -24,27 +24,27 @@ ms.date: 01/12/2017
 ## Benefits of integrating TFS with Project Server  
  Integration between TFS and Project Server can become a considerable advantage for organizations that want to bridge the collaboration gap between their project management offices and their software development teams. By integrating the two server products, teams can work together more effectively in the following ways:  
   
--   Acquire up-to-date insight into portfolio execution, alignment with strategic objectives, and resource usage of software development projects by leveraging the quantitative data in different systems.  
+- Acquire up-to-date insight into portfolio execution, alignment with strategic objectives, and resource usage of software development projects by leveraging the quantitative data in different systems.  
   
--   Automate the sharing of project information across teams, and improve coordination between teams that use disparate methodologies, such as waterfall and agile, through common data and agreed-upon metrics.  
+- Automate the sharing of project information across teams, and improve coordination between teams that use disparate methodologies, such as waterfall and agile, through common data and agreed-upon metrics.  
   
--   Enable development and project-management teams to collaborate and communicate project timelines and progress by using familiar tools such as Visual Studio, Microsoft Project, and SharePoint Products.  
+- Enable development and project-management teams to collaborate and communicate project timelines and progress by using familiar tools such as Visual Studio, Microsoft Project, and SharePoint Products.  
   
- If Project Server is not deployed, you can use the Team Foundation plug-in to Microsoft Project to manage projects based on work items in Team Foundation. When you install Visual Studio or Team Explorer, the Team Foundation plug-in to Microsoft Project is installed. By using the plug-in, you can add and change TFS work item data. You can [plan projects, schedule tasks, assign resources, and track changes](../../boards/backlogs/office/create-your-backlog-tasks-using-project.md). Different users can update work items from different project plans.  
+  If Project Server is not deployed, you can use the Team Foundation plug-in to Microsoft Project to manage projects based on work items in Team Foundation. When you install Visual Studio or Team Explorer, the Team Foundation plug-in to Microsoft Project is installed. By using the plug-in, you can add and change TFS work item data. You can [plan projects, schedule tasks, assign resources, and track changes](../../boards/backlogs/office/create-your-backlog-tasks-using-project.md). Different users can update work items from different project plans.  
   
- The following table compares the main tasks that you can perform by using the Team Foundation plug-in to Microsoft Project with those that require integration of the two server products. You can use the plug-in with all editions of Project 2007, Project 2010, and Project 2013. To integrate TFS and Project Server, you must install Project Professional 2007, Project Professional 2010, or Project Professional 2013.  
+  The following table compares the main tasks that you can perform by using the Team Foundation plug-in to Microsoft Project with those that require integration of the two server products. You can use the plug-in with all editions of Project 2007, Project 2010, and Project 2013. To integrate TFS and Project Server, you must install Project Professional 2007, Project Professional 2010, or Project Professional 2013.  
   
 |Feature|Team Foundation plug-in to Microsoft Project|TFS and Project Server Integration|  
 |-------------|--------------------------------------|----------------------------------------|  
-|Directly connect to TFS, and change work items and their dependencies.|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")||  
-|Initiate project planning, schedule work, and manage project calendars.|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
-|Manage and synchronize dependency links.|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")||  
-|View project status, schedule, and resource allocation.|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
-|Work with subprojects, standard projects, and enterprise projects.|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
-|Control the level of collaboration and synchronization.||![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
-|View and leverage enterprise resource pools.||![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
-|View resource allocation   across multiple enterprise project plans.||![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
-|Leverage portfolio optimization, demand management, and reporting (features available only with Project Server)||![Advanced access](_img/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|Directly connect to TFS, and change work items and their dependencies.|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")||  
+|Initiate project planning, schedule work, and manage project calendars.|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|Manage and synchronize dependency links.|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")||  
+|View project status, schedule, and resource allocation.|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|Work with subprojects, standard projects, and enterprise projects.|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|Control the level of collaboration and synchronization.||![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|View and leverage enterprise resource pools.||![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|View resource allocation   across multiple enterprise project plans.||![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
+|Leverage portfolio optimization, demand management, and reporting (features available only with Project Server)||![Advanced access](media/aml_proj_greenfield_whitecheckmark.png "AML_Proj_GreenField_WhiteCheckmark")|  
   
 ##  <a name="OperationalDifferences"></a> 
 

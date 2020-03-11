@@ -1,21 +1,21 @@
----
-title: Manually process the data warehouse and analysis services cube
+﻿---
+title: Process data warehouse and analysis services cube
 titleSuffix: TFS
 description: Manually process the data warehouse and analysis services cube when connecting to an on-premises Team Foundation Server 
 ms.assetid: 81EDA53E-88A5-46E2-952B-2D6E1FBA33E2  
 ms.prod: devops
 ms.technology: devops-analytics
 ms.topic: conceptual
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: kaelli
 author: KathrynEE
-monikerRange: "<= azdevserver-2019" 
+monikerRange: "<= azure-devops-2019" 
 ms.date: 11/19/2018
 ---
 
 # Manually process the TFS data warehouse and analysis services cube
 
-[!INCLUDE [temp](../_shared/tfs-report-platform-version.md)] 
+[!INCLUDE [temp](../includes/tfs-report-platform-version.md)] 
 
 When you need the freshest data in your reports, when errors have occurred, or after you've resolved schema conflicts, you can manually process the Team Foundation Server (TFS) relational database (Tfs\_Warehouse) or SQL Server Analysis Services cube (Tfs\_Analysis).
 
@@ -23,7 +23,7 @@ During typical operations, the warehouse is processed within two minutes of chan
 
 You use the Warehouse Control Web Service to process the warehouse or cube or perform other maintenance operations. If you know that you want to perform a full rebuild of both databases, then use the [Administration console](rebuild-data-warehouse-and-cube.md) or the [TFSConfig RebuildWarehouse command](https://msdn.microsoft.com/library/ee349264.aspx). 
 
- ![Warehouse Control Web Services page](_img/web-services.png)
+ ![Warehouse Control Web Services page](media/web-services.png)
 
 > [!NOTE]  
 > Do not use SQL Server Management Studio (SSMS) to manually process the cube. Processing the cube using that tool is not supported. 
@@ -35,13 +35,13 @@ Processing the warehouse or cube depends on how much data is involved; it can ta
 
 ### To access the web services
 
-1. If you aren't a member of the **Administrators** security group on the application-tier server for TFS, [get added now](/tfs/server/admin/add-administrator-tfs).  
+1. If you aren't a member of the **Administrators** security group on the application-tier server for TFS, [get added now](/azure/devops/server/admin/add-administrator).  
 
 	Also, make sure that your server-level **Administer warehouse** permission must be set to **Allow**.
 
 2. Log on to the application-tier server and open the Warehouse Control Web Service by entering the following URL in a supported web browser:  
 
-	```http://localhost:8080/tfs/TeamFoundation/Administration/v3.0/WarehouseControlService.asmx  ``` 
+	```http://localhost:8080/tfs/TeamFoundation/Administration/v3.0/WarehouseControlService.asmx``` 
 
 	If another name was used other than **tfs** for the virtual directory, then type the *IIS Virtual Directory* that was specified when Team Foundation Server was installed.  
 
@@ -53,7 +53,7 @@ Processing the warehouse or cube depends on how much data is involved; it can ta
 
 Choose  **GetProcessingStatus**.
 
-![Get processing status](_img/IC714222.png)
+![Get processing status](media/IC714222.png)
 
 A new browser window opens. It indicates the following job's processing status:
 
@@ -122,7 +122,7 @@ This service changes the StringStoresCompatibilityLevel to 1100 for the **Work I
 
 1. From the Warehouse Control Web Service, choose **ProcessDimensionsForExpandedCapacity**.  
 
-2. Enter the name of the dimension. From the above error message, the dimension name is ```dimWorkItem```.  
+2. Enter the name of the dimension. From the above error message, the dimension name is ```vDimWorkItemOverlay```.  
  
 3. The service returns **True** when it successfully resets the value to 1100. 
 

@@ -9,12 +9,12 @@ ms.assetid: bf316d3c-5d74-42d4-90f1-bb411b0bf13d
 ms.author: kaelli
 author: KathrynEE
 ms.date: 12/30/2016
-ms.manager: douge
+ms.manager: mijacobs
 ---
 
 # Code Coverage Excel Report
 
-[!INCLUDE [temp](../_shared/tfs-sharepoint-version.md)]
+[!INCLUDE [temp](../includes/tfs-sharepoint-version.md)]
 
 With the Code Coverage report, you can monitor how much code the team is testing over time. Team members can use this report to help determine how close parts of the code are to release quality. For information about how to access this report, see [Excel reports](excel-reports.md).  
   
@@ -30,7 +30,7 @@ With the Code Coverage report, you can monitor how much code the team is testing
 ##  <a name="Data"></a> Data in the Report  
  The team can review the Code Coverage report to determine whether tests cover the code sufficiently and how the coverage changed over time. As the following illustration shows, the report provides a line graph of the build verification test (BVT) code coverage and other coverage over the most recent four weeks.  
   
- ![Code Coverage Report](_img/procguid_codecoverage.png "ProcGuid_CodeCoverage")  
+ ![Code Coverage Report](media/procguid_codecoverage.png "ProcGuid_CodeCoverage")  
   
  This report is based on a PivotChart report that shows the most recent four weeks of data that was captured for code changes and that is stored in the data warehouse.  
   
@@ -63,13 +63,13 @@ With the Code Coverage report, you can monitor how much code the team is testing
   
  You can review the Code Coverage report to answer these questions:  
   
--   How much of the code is the team testing?  
+- How much of the code is the team testing?  
   
--   Does the team have sufficient code coverage?  
+- Does the team have sufficient code coverage?  
   
--   Is code coverage increasing or decreasing over time?  
+- Is code coverage increasing or decreasing over time?  
   
- For more information about how code coverage impacts quality, see [Quality](../sharepoint-dashboards/quality-dashboard-agile-cmmi.md) and [Build Quality Indicators](../sql-reports/build-quality-indicators-report.md).  
+  For more information about how code coverage impacts quality, see [Quality](../sharepoint-dashboards/quality-dashboard-agile-cmmi.md) and [Build Quality Indicators](../sql-reports/build-quality-indicators-report.md).  
   
 ##  <a name="Updating"></a> Customizing the Report  
  You can customize the Code Coverage report by opening it in Office Excel and changing the filter options or a column field list for the PivotTable report. You can modify the report to support other views, as the following table describes.  
@@ -80,15 +80,8 @@ With the Code Coverage report, you can monitor how much code the team is testing
 |Code coverage for a product area|Change the filter for **Area** (default=All)|  
 |Code coverage for the most recent six, eight, or more weeks|In the Columns PivotTable Field List, replace **@@Last 4 weeks@@** with a different **Set**|  
   
- For more information about how to work with and customize PivotTable and PivotChart reports, see the following pages on the Microsoft Web site:  
-  
--   [Ways to customize PivotTable reports](http://go.microsoft.com/fwlink/?LinkId=165722)  
-  
--   [Edit or remove a workbook from Excel Services](http://go.microsoft.com/fwlink/?LinkId=165723)  
-  
--   [Publish a workbook to Excel Services](http://go.microsoft.com/fwlink/?LinkId=165724)  
-  
--   [Save a file to a SharePoint library or another Web location](http://go.microsoft.com/fwlink/?LinkId=165725)  
-  
-## Related notes  
- [Excel reports](excel-reports.md)
+
+## Related articles
+
+- [Excel reports](excel-reports.md)
+- [Design the layout and format of a PivotTable](https://support.office.com/article/design-the-layout-and-format-of-a-pivottable-a9600265-95bf-4900-868e-641133c05a80) 

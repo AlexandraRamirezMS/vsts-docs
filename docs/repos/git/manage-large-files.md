@@ -5,9 +5,9 @@ description: Recommendations on how to manage large binary files in Git, Visual 
 ms.assetid: 57ad13a3-9178-4f31-b776-79f32b1afa58
 ms.prod: devops
 ms.technology: devops-code-git 
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: conceptual
 ms.date: 03/14/2018
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Manage and store large files in Git
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015
 
 Git is great at keeping the footprint of your source code small because the differences between versions are easily picked out and code is easily compressed. 
 Large files that don't compress well and change entirely between versions (such as binaries) present problems when stored in your Git repos. 
@@ -78,7 +78,7 @@ The benefit of Git LFS is that your team can use the familiar end to end Git wor
 LFS files can be as big as you need them to be.
 Additionally, as of version 2.0, Git LFS supports [file locking](https://github.com/git-lfs/git-lfs/wiki/File-Locking) to help your team work on large, undiffable assets like videos, sounds, and game maps.
 
-Git LFS is [is fully supported and free in Azure DevOps Services](https://blogs.msdn.microsoft.com/visualstudioalm/2015/10/01/announcing-git-lfs-on-all-vso-git-repos/).
+Git LFS is [is fully supported and free in Azure DevOps Services](https://devblogs.microsoft.com/devops/announcing-git-lfs-on-all-vso-git-repos/).
 To use LFS with Visual Studio, you need at least [Visual Studio 2015 Update 2](/visualstudio/releasenotes/vs2017-relnotes).
 Just follow the [instructions to install the client](https://git-lfs.github.com/), set up LFS tracking for files on your local repo, and then push your changes to Azure Repos.
 
@@ -86,16 +86,16 @@ Just follow the [instructions to install the client](https://git-lfs.github.com/
 
 Git LFS has some drawbacks that you should consider before adopting:
 
-0. Every Git client used by your team must install the Git LFS client and understand its [tracking configuration](https://github.com/github/git-lfs/tree/master/docs).
-0. If the Git LFS client is not installed and configured correctly, you will not see the binary files committed through Git LFS when you clone your repo. 
-Git will download the data describing the large file (which is what Git LFS commits to the repo) and not the actual binary file itself. 
-Committing large binaries without the Git LFS client installed will push the binary to your repo.
-0. Git cannot merge the changes from two different versions of a binary file even if both versions have a common parent.
-If two people are working on the same file at the same time, they must work together to reconcile their changes to avoid overwriting the other's work.
-Git LFS provides [file locking](https://github.com/git-lfs/git-lfs/wiki/File-Locking) to help.
-Users must still take care to always pull the latest copy of a binary asset before beginning work.
-0. Azure Repos currently does not support using SSH in repos with Git LFS tracked files.   
-0. If a user drags and drops a binary file via the web interface into a repo which is configured for Git LFS, [the binary will be committed to the repo](https://visualstudio.uservoice.com/forums/330519-visual-studio-team-services/suggestions/34265377-drag-and-drop-lfs-files-into-web-gui) and not the pointers that would be committed via the Git LFS client.
+1. Every Git client used by your team must install the Git LFS client and understand its [tracking configuration](https://github.com/github/git-lfs/tree/master/docs).
+2. If the Git LFS client is not installed and configured correctly, you will not see the binary files committed through Git LFS when you clone your repo. 
+   Git will download the data describing the large file (which is what Git LFS commits to the repo) and not the actual binary file itself. 
+   Committing large binaries without the Git LFS client installed will push the binary to your repo.
+3. Git cannot merge the changes from two different versions of a binary file even if both versions have a common parent.
+   If two people are working on the same file at the same time, they must work together to reconcile their changes to avoid overwriting the other's work.
+   Git LFS provides [file locking](https://github.com/git-lfs/git-lfs/wiki/File-Locking) to help.
+   Users must still take care to always pull the latest copy of a binary asset before beginning work.
+4. Azure Repos currently does not support using SSH in repos with Git LFS tracked files.   
+5. If a user drags and drops a binary file via the web interface into a repo which is configured for Git LFS, the binary will be committed to the repo and not the pointers that would be committed via the Git LFS client.
 
 ### File format
 
@@ -112,5 +112,5 @@ size 4923023
 
 ### Known issues
 
-If you use a version of LFS below 2.4.0 with TFS, there's an extra setup step required to [authenticate using NTLM instead of Kerberos](lfs-kerberos.md).
+If you use a version of LFS below 2.4.0 with Azure DevOps Server or TFS, there's an extra setup step required to [authenticate using NTLM instead of Kerberos](lfs-kerberos.md).
 This step is no longer necessary as of LFS 2.4.0, and we highly recommend you upgrade.

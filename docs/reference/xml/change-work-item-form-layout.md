@@ -7,7 +7,7 @@ ms.technology: devops-agile
 ms.assetid: 73869d51-eaa2-4aad-90f4-3081b8d26963
 ms.author: kaelli
 author: KathrynEE
-ms.manager: douge
+ms.manager: mijacobs
 ms.topic: conceptual
 monikerRange: '>= tfs-2013 <= tfs-2017'
 ms.date: 03/31/2017
@@ -15,7 +15,7 @@ ms.date: 03/31/2017
 
 # Change the work item form layout
 
-[!INCLUDE [temp](../../_shared/version-tfs-2013-2017.md)] 
+[!INCLUDE [temp](../../includes/version-tfs-2013-2017.md)] 
 
 You can change the work item form layout by exporting the XML file and modifying the contents of the `FORM` section. After you modify and import the XML file, you can verify the changes you made in the updated work item type. Types of layout changes you can make include but are not limited to the following:  
   
@@ -31,7 +31,7 @@ You can change the work item form layout by exporting the XML file and modifying
   
 For an overview of the controls you can place in a work item form, see [Specify work item form controls](specify-work-item-form-controls.md). For an overview of the top-level structural elements for the `FORM` section, see. [Design the work item form](design-work-item-form.md).  
   
-[!INCLUDE [temp](../../_shared/update-xml-wit.md)] 
+[!INCLUDE [temp](../../includes/update-xml-wit.md)] 
   
 <a name="Export"></a> 
 ## Export and open the WIT definition file  
@@ -183,7 +183,7 @@ Perform one of the following steps based on the scope of the customization you a
   
 9. Save your changes.  
   
-10. To import the new work item type to a single project, see [Import, export, and manage work item types](../witadmin/witadmin-import-export-manage-wits.md). To add the work item type to your process template, see [Add type definitions for work items](define-modify-work-item-fields.md).  
+10. To import the new work item type to a single project, see [Import, export, and manage work item types](../witadmin/witadmin-import-export-manage-wits.md). To add the work item type to your process template, see [Add type definitions for work items](../process-templates/add-wit-definitions-process-template.md).  
   
 <a name="Verify"></a> 
 ##  Verify the Web page or HTML content appears in the work item form  

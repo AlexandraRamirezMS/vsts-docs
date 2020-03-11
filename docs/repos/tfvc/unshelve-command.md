@@ -5,9 +5,9 @@ description: Unshelve Command
 ms.assetid: 468ab1f4-f565-41d9-a5ad-1481ad29b176
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: reference
 ms.date: 08/10/2016
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Unshelve Command
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 Restores shelved file revisions, check-in notes, comments, and work item associations to the current workspace or removes an existing shelveset from the server.
 
@@ -24,8 +24,11 @@ Restores shelved file revisions, check-in notes, comments, and work item associa
 
 To use the **unshelve** command, you must have the **Read** permission set to **Allow**, and you must have the **Check out** permission for the items in the shelveset set to **Allow**. Additionally, to delete a shelveset, you must be its owner or have the **Administer shelved changes** global permission set to **Allow**. For more information, see [Permissions and groups reference](../../organizations/security/permissions.md).
 
-    tf unshelve [/move] [shelvesetname[;username]] itemspec 
-    [/recursive] [/noprompt][/login:username,[password]]
+```
+tf unshelve [/move] [shelvesetname[;username]] itemspec 
+[/recursive] [/noprompt][/login:username,[password]]
+```
+
 ## Parameters<table>
 <thead>
 <tr>
@@ -46,13 +49,12 @@ To use the **unshelve** command, you must have the **Read** permission set to **
 <td><p><i>Itemspec</i></p></td>
 <td><p>Identifies the file or folder revisions to unshelve into the current workspace. If this parameter is not included, all pending changes in the specified shelveset are unshelved, by default. Server paths are not allowed.</p>
 <p>For more information about how Team Foundation parses itemspecs to determine which items are within scope, see <a href="https://msdn.microsoft.com/library/4y2ash30">Command-Line Options</a>.</p>
->**Note:**  
->You can specify more than one *Itemspec* argument.
+&gt;<strong>Note:</strong><br/>&gt;You can specify more than one <em>Itemspec</em> argument.
 </td>
 </tr>
 <tr>
 <td><p><i>username</i></p></td>
-<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <i>DOMAIN\UserName</i> or <i>UserName</i.</p></td>
+<td><p>Provides a value to the <strong>/login</strong> option. You can specify a username value as either <i>DOMAIN\UserName</i> or <i>UserName&lt;/i.</p></td>
 </tr>
 </tbody>
 </table>
@@ -96,8 +98,6 @@ You can use the **unshelve** command to restore individual file revisions from a
 
 For more information on how to find the **tf** command-line utility, see [Tf Command-Line Utility Commands](https://msdn.microsoft.com/library/z51z7zy0).
 
-### 
-
 #### Recycle Shelved Changes
 
 If you want to integrate shelved revisions into your current workspace in order to make ongoing revisions, unshelve the desired shelveset. As a best practice, get the latest version of your version-controlled files after unshelving as well.
@@ -119,11 +119,15 @@ You can delete a shelveset by using `tf shelve /delete`. For more information, s
 ## Examples
 The following example opens the **Unshelve** dialog box so that you can find and unshelve a shelveset into the current workspace. You also have an option in the dialog box to have the shelveset deleted when the unshelve operation completes.
 
-    c:\>tf unshelve
+```
+c:\>tf unshelve
+```
 
 The following example unshelves the shelveset buddytest\_1256 into the current workspace and removes it from Team Foundation Server.
 
-    c:\>tf unshelve /move buddytest_1256
+```
+c:\>tf unshelve /move buddytest_1256
+```
 
 ## See Also
 

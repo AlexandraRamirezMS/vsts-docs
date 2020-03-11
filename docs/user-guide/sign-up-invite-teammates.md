@@ -1,5 +1,5 @@
 ---
-title: Sign up, invite teammates
+title: Sign up, sign in, invite teammates
 titleSuffix: Azure DevOps Services
 ms.custom: seodec18  
 description: Quickstart guide to signing up and inviting others to join a project in Azure DevOps
@@ -7,31 +7,36 @@ ms.technology: devops-new-user
 ms.prod: devops
 ms.topic: quickstart
 ms.assetid: 
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: chcomley
 author: chcomley
-ms.date: 12/06/2018
-monikerRange: 'vsts'
+ms.date: 05/15/2019
+monikerRange: 'azure-devops'
 ---
 
+# Quickstart: Sign up, sign in to Azure DevOps
 
-# Quickstart: Sign up for a free organization
+[!INCLUDE [version-vsts-only](../includes/version-vsts-only.md)]
 
-[!INCLUDE [version-vsts-only](../_shared/version-vsts-only.md)]
+In this quickstart, you learn how to sign up for Azure DevOps for free, sign in with a Microsoft or GitHub account, create an organization, create a project, and invite your teammates.
 
-In this quickstart, you learn how to sign up for a free organization with a Microsoft account. You also learn how to invite your teammates.
-
-[!INCLUDE [acquisition-intro-devops](../_shared/acquisition-intro-devops.md)]
+[!INCLUDE [acquisition-intro-devops](../includes/acquisition-intro-devops.md)]
 
 <a name="MicrosoftAccount"></a>
 
-[!INCLUDE [sign-up-msft-account](../_shared/sign-up-msft-account.md)]
+[!INCLUDE [sign-up-msft-account](../includes/sign-up-msft-account.md)]
 
-[!INCLUDE [welcome-page](../_shared/welcome-project-page.md)]
+<a name="GitHubAccount"></a>
+
+[!INCLUDE [sign-in-github-account](../includes/sign-in-github-account.md)]
+
+<a name="CreateProject"></a>
+
+[!INCLUDE [create-project](../includes/create-project.md)]
 
 <a id="invite-others" />
 
-[!INCLUDE [invite-teammates](../_shared/invite-teammates.md)]
+[!INCLUDE [invite-teammates](../includes/invite-teammates.md)]
 
 For more information about managing users and organization access, see [Add organization users for Azure DevOps](../organizations/accounts/add-organization-users.md).
 
@@ -41,3 +46,5 @@ For more information about managing users and organization access, see [Add orga
 > [Add code to your Git repository](code-with-git.md)
 >
 > [Plan and track work](plan-track-work.md)
+
+

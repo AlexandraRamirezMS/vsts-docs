@@ -5,9 +5,9 @@ description: Learn about pull requests in Azure DevOps Services & TFS
 ms.prod: devops
 ms.technology: devops-code-git 
 ms.assetid: 36A4986E-BFB8-422B-BFC9-8A0CB75D0603    
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: overview
 ms.date: 09/10/2018
 layout: LandingPage
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2013'
 
 # Get feedback with pull requests
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015
 
 Pull requests combine the review and merge of your code into a single collaborative process.
 Once you're done fixing a bug or new feature in a branch, create a new pull request.
@@ -63,7 +63,7 @@ Diffusing skills and knowledge makes your team stronger and more resilient.
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img width="48" height="48" alt="Link work items to pull requests" src="../../_img/index/i_tasks.svg" />
+                            <img width="48" height="48" alt="Link work items to pull requests" src="../../media/index/i_tasks.svg" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -105,7 +105,7 @@ Take these suggestions and create new work items and feature branches separate f
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img width="48" height="48" alt="Provide reviewer guidance with pull request templates" src="../../_img/index/i_tasks.svg" />
+                            <img width="48" height="48" alt="Provide reviewer guidance with pull request templates" src="../../media/index/i_tasks.svg" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -142,7 +142,7 @@ Take these suggestions and create new work items and feature branches separate f
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img width="48" height="48" alt="Vote on the changes" src="_img/logos/check.svg" />
+                            <img width="48" height="48" alt="Vote on the changes" src="media/logos/check.svg" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -172,7 +172,7 @@ A clean build of the merged code and approval from multiple reviewers are some e
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img width="48" height="48" alt="Branch policies overview" src="../../_img/index/i_branch-policies.svg" />
+                            <img width="48" height="48" alt="Branch policies overview" src="../../media/index/i_branch-policies.svg" />
                         </div>
                     </div>
                     <div class="cardText">

@@ -5,9 +5,9 @@ description: Configure Command
 ms.assetid: c61c2a48-20d4-4452-b6e1-6c1aa3b521ee
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: reference
 ms.date: 08/10/2016
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Configure Command
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 Enables an administrator to view and change the following configuration settings for a project in the **Source Control Settings** dialog box:
 
@@ -30,7 +30,9 @@ Enables an administrator to view and change the following configuration settings
 
 To use the **configure** command, you must have the **Edit server-level information** permission set to **Allow**. For more information, see [Permissions and groups reference](../../organizations/security/permissions.md).
 
-    tf configure [PathOfTeamProject] [/collection:TeamProjectCollectionUrl][/login:username,[password]]
+```
+tf configure [PathOfTeamProject] [/collection:TeamProjectCollectionUrl][/login:username,[password]]
+```
 
 ## Parameters
 
@@ -67,11 +69,15 @@ For more information on how to find the **tf** command-line utility, see [Tf Com
 
 The following example displays the **Source** **Control** **Settings** dialog box in which you can examine and modify the project settings of the workspace for the c:\\projects folder.
 
-    c:\projects>tf configure
+```
+c:\projects>tf configure
+```
 
-The following example displays the myproj project settings in the project collection at http://myserver:8080/tfs/DefaultCollection.
+The following example displays the myproj project settings in the project collection at `http://myserver:8080/tfs/DefaultCollection`.
 
-    c:\projects>tf configure $/myproj / http://myserver:8080/tfs/DefaultCollection 
+```
+c:\projects>tf configure $/myproj / http://myserver:8080/tfs/DefaultCollection 
+```
 
 ## See Also
 
@@ -81,7 +87,7 @@ The following example displays the myproj project settings in the project collec
 
 #### Concepts
 
-[Managing File Types](/tfs/server/admin/manage-file-types)
+[Managing File Types](/azure/devops/server/admin/manage-file-types)
 
 #### Other Resources
 

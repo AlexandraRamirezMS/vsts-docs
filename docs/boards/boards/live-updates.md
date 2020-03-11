@@ -7,62 +7,49 @@ ms.topic: quickstart
 ms.technology: devops-agile
 ms.prod: devops
 ms.assetid: 
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: kaelli
 author: KathrynEE
 monikerRange: '>= tfs-2017'
-ms.date: 11/19/2018
---- 
+ms.date: 02/14/2019
+---
 
 
-<a id="live-updates"></a>
+
 
 # Enable live updates 
 
-[!INCLUDE [temp](../_shared/version-vsts-tfs-2017-on.md)]
+[!INCLUDE [temp](../includes/version-vsts-tfs-2017-on.md)]
+
+<a id="live-updates"></a>
 
 Enable live updates to automatically refresh your Kanban board when changes occur. As other team members move or reorder cards, your board will automatically update with the changes. With live updates enabled, you no longer have to press F5 to see the latest changes.  
 
-[!INCLUDE [temp](../_shared/prerequisites-kanban.md)]
+[!INCLUDE [temp](../includes/prerequisites-kanban.md)]
 
+::: moniker range=">= azure-devops-2019"
 
-[!INCLUDE [temp](../../_shared/new-navigation-7.md)]
-
-# [New navigation](#tab/new-nav)
-
-::: moniker range=">= azdevserver-2019"
-
-Choose the ![ ](../_img/icons/view-options-icon.png) view options icon and move the slider for **Live updates** to On.  
+Choose the ![ ](../media/icons/view-options-icon.png) view options icon and move the slider for **Live updates** to On.  
 
 > [!div class="mx-imgBorder"]  
-> ![Kanban board](_img/turn-live-updates-on-agile.png) 
-
-::: moniker-end
-
-::: moniker range=">= tfs-2017 <= tfs-2018"
-**New navigation** isn't supported on TFS at this time. Choose **Previous navigation** for guidance.
+> ![Kanban board](media/turn-live-updates-on-agile.png) 
 
 ::: moniker-end
 
 
-# [Previous navigation](#tab/previous-nav)
+::: moniker range=">= tfs-2017 <= tfs-2018" 
 
-::: moniker range=">= tfs-2017 <= tfs-2018 || vsts" 
+From the Kanban board, choose the ![ ](../media/icons/live-updates-icon.png) **Live updates** icon.  
 
-Choose the ![ ](../_img/icons/live-updates-icon.png) **Live updates** icon.  
+![Kanban board, live updates icon](/azure/devops/boards/media/kanban-live-updates.png)  
 
-![Kanban board, live updates icon](/azure/devops/boards/_shared/_img/kanban-live-updates.png)  
 As one team member updates the status of a work item, other team members will see those updates in real time as they occur.  
 
-![Live update](_img/kanban-live-updates.gif)  
+![Live update](media/kanban-live-updates.gif)  
 
 ::: moniker-end
 
-::: moniker range="azdevserver-2019"
-[!INCLUDE [temp](../../_shared/previous-navigation-not-supported-azd.md)] 
-::: moniker-end
-
----
+[!INCLUDE [temp](../includes/note-kanban-boards-teams.md)]
 
 ## Related articles
 

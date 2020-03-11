@@ -5,9 +5,9 @@ description: Compare files
 ms.assetid: d16677af-ab40-4e8c-99d3-ae54675dcfb6
 ms.prod: devops
 ms.technology: devops-code-tfvc
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: sdanie
-author: steved0x
+author: apawast
 ms.topic: conceptual
 ms.date: 05/12/2017
 monikerRange: '>= tfs-2015'
@@ -16,7 +16,7 @@ monikerRange: '>= tfs-2015'
 
 # Compare files
 
-#### Azure Repos | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
+#### Azure Repos | Azure DevOps Server 2019 | TFS 2018 | TFS 2017 | TFS 2015 | VS 2017 | VS 2015 | VS 2013
 
 This article provides a guide for comparing files when using Team Foundation Version Control (TFVC). If you're using Git for version control, see [comparing files with Git and Visual Studio](../../repos/git/review-history.md).  
 
@@ -85,18 +85,18 @@ When you compare files using the instructions in the previous sections, Visual S
 > [!NOTE]
 > Even if you're not using version control, you can use the Diff window in Visual Studio to compare two files. To open the Diff window directly in Visual Studio, you can use the [devenv.exe tool with the /diff option](https://msdn.microsoft.com/library/jj874068.aspx) from the Developer Command Prompt to compare any two files on your computer.
 
-![Comparing two versions of a file](_img/compare-files/IC558594.png)
+![Comparing two versions of a file](media/compare-files/IC558594.png)
 
-![Comparison window layouts](_img/compare-files/IC556152.png)
-![Step 1](_img/compare-files/IC756627.png) Deleted text
+![Comparison window layouts](media/compare-files/IC556152.png)
+![Step 1](media/compare-files/IC756627.png) Deleted text
 
-![Step 2](_img/compare-files/IC646325.png) Added text
+![Step 2](media/compare-files/IC646325.png) Added text
 
-![Step 3](_img/compare-files/IC646326.png) Changed text
+![Step 3](media/compare-files/IC646326.png) Changed text
 
-![Step 4](_img/compare-files/IC646327.png) Code review comment
+![Step 4](media/compare-files/IC646327.png) Code review comment
 
-![Step 5](_img/compare-files/IC646328.png) Visual summary of the differences between the files
+![Step 5](media/compare-files/IC646328.png) Visual summary of the differences between the files
 
 Here are some tips for working with the **Diff** window:
 
@@ -104,11 +104,11 @@ Here are some tips for working with the **Diff** window:
 
 -   To skip:
 
-    -   To the next difference, choose **Next difference** ![Next difference](_img/compare-files/IC558315.gif) (Keyboard: F8).
+    -   To the next difference, choose **Next difference** ![Next difference](media/compare-files/IC558315.gif) (Keyboard: F8).
 
-    -   To the previous difference, choose **Previous difference** ![Previous difference](_img/compare-files/IC558316.gif) (Keyboard: Shift+F8).
+    -   To the previous difference, choose **Previous difference** ![Previous difference](media/compare-files/IC558316.gif) (Keyboard: Shift+F8).
 
-    -   Back and forth in the file, choose a section of the ![Step 5](_img/compare-files/IC646328.png) visual summary.
+    -   Back and forth in the file, choose a section of the ![Step 5](media/compare-files/IC646328.png) visual summary.
 
 -   When you participate in a [code review](day-life-alm-developer-suspend-work-fix-bug-conduct-code-review.md), you use the **Diff** window to see the code changes that are the subject of the review. For more information, see [Day in the life of a devops Developer: Suspend work, fix a bug, and conduct a code review](day-life-alm-developer-suspend-work-fix-bug-conduct-code-review.md).
 
@@ -119,7 +119,7 @@ Merge more complex changes between two versions when you [resolve merge conflict
 
 If you need to merge two files with significant differences outside of TFVC conflict resolution, use the [vsdiffmerge command line tool](https://roadtoalm.com/2013/10/22/use-visual-studio-as-your-diff-and-merging-tool-for-local-files).
 The vsdiffmerge tool allows you to merge changes side-by-side and pick which contents you want to keep for each difference between the files.
-Run the command with four file parameters followed by the `/m` flag from the Visual Studio Developer Command Prompt to bring up the merge tool directly against any tow files. 
+Run the command with four file parameters followed by the `/m` flag from the Visual Studio Developer Command Prompt to bring up the merge tool directly against any two files. 
 
 The basic syntax for vsdiffmerge.exe is:
 

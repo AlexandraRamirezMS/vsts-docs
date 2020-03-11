@@ -1,97 +1,100 @@
 ---
-title: Access Analytics data from Power BI desktop
-titleSuffix: Azure DevOps Services  
-description: How to access Analytics Service OData from a Power BI Desktop OData feed for Azure DevOps  
+title: Access Analytics data from Power BI Desktop
+titleSuffix: Azure DevOps
+description: How to access Analytics OData from a Power BI Desktop OData feed for Azure DevOps  
 ms.prod: devops
 ms.technology: devops-analytics
 ms.topic: conceptual
 ms.assetid: b26f1d04-95ca-43d5-8333-176780f3980a  
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: kaelli
 author: KathrynEE
-monikerRange: '>= azdevserver-2019'
-ms.date: 09/10/2018
+monikerRange: '>= azure-devops-2019'
+ms.date: 01/13/2020
 ---
 
-# Connect using the Power BI OData feed
+# Connect to Analytics data by using the Power BI OData feed
 
-[!INCLUDE [temp](../../_shared/version-azure-devops.md)] 
+[!INCLUDE [temp](../includes/version-azure-devops.md)] 
 
-You can access the Analytics service data through the Power BI Desktop OData feed. This method works for any organization that has alternate credentials enabled in Azure DevOps. OAuth is currently not supported. 
+You can access Analytics data through the Power BI Desktop OData feed. 
 
-## Access the Analytics service OData feed
-1. Make sure you have installed the [Analytics extension](../analytics/analytics-extension.md).  
+> [!IMPORTANT]  
+> The method demonstrated in this article works for small organizations, because it always pulls in all the data into Power BI. Most of the filtering that's specified in the Power Query Editor is done client-side. For information about other approaches, see [Power BI integration Overview](overview.md). 
 
-2. Make sure you have configured the [permissions required to access the Analytics service](../analytics/analytics-security.md).  
+## Access the Analytics OData feed
 
-3. Open Power BI Desktop. If you need to install it, [do that now](https://powerbi.microsoft.com/desktop).  
+::: moniker range="azure-devops-2019"
 
-4. Choose **Get Data** from either the welcome page or the Home ribbon.  
+> [!IMPORTANT]  
+> Make sure that you've [enabled or installed Analytics](../dashboards/analytics-extension.md).  
 
-	![Power BI Desktop Get Data ](_img/access-analytics-pbi-get-data.png) 
+::: moniker-end  
 
-5. Next, select **Other>OData Feed** and choose **Connect**.  
+1. Make sure that you've [configured the permissions required to access Analytics](analytics-security.md).
 
-	<img src="_img/pbi2.png" alt="Select OData Feed" style="border: 1px solid #C3C3C3;" />  
+1. Open Power BI Desktop. If you haven't already done so, [install Power BI Desktop now](https://powerbi.microsoft.com/desktop).  
 
-6.	In a supported browser, enter the URL in the following format:  
+1. On the Power BI Desktop welcome page or home ribbon, select **Get Data**.
 
-	```OData
-	https://analytics.dev.azure.com/{OrganizationName}/_odata/{version}/
-	```  
+	![Power BI Desktop splash screen "Get data" button](media/data-connector/get-data-splash-screen.png) 
 
-	If the *OrganizationName* is **fabrikam** and the *version* is **v1.0**, then the URL is `https://analytics.dev.azure.com/fabrikam/_odata/v1.0/`.
+1. In the left pane, select **Other** > **OData Feed**, and then select **Connect**.  
 
-	<img src="_img/pbi3.png" alt="Select OData Feed" style="border: 1px solid #C3C3C3;" />   
+    ![The OData Feed button](media/pbi2.png)  
 
-	>[!NOTE]  
-	>Alternatively, you can enter the URL with the *ProjectName* specified which will trim the results by the specified project across all entities related to that project. 
-	>
-	>`https://analytics.dev.azure.com/{OrganizationName}/{ProjectName}/_odata/{version}/` 
+1. In a supported browser, enter the URL in the format 
+`https://analytics.dev.azure.com/{OrganizationName}/_odata/{version}/`.  
 
-7. You'll see a prompt to authenticate against the service. If you have not done so previously, see [Client Authentication Options](../analytics/client-authentication-options.md).  
+   For example, if {*OrganizationName*} is **fabrikam** and {*version*} is **v1.0**, the URL is `https://analytics.dev.azure.com/fabrikam/_odata/v1.0/`.
 
-8. Next, select the entities you want to retrieve data for by checking those entities.
+    ![Enter OData Feed URL](media/pbi3.png)  
 
-	>[!IMPORTANT]  
-	>Do *not* select any entity with the name **Snapshot** in it. These entities contain the state of every work item on every day since each work item was created. For repositories of any size this will lead to tens or hundreds of millions of work items which will not load. **Snapshot** tables are intended only for [aggregation queries](../extend-analytics/odata-query-guidelines.md)
+   > [!NOTE]  
+   >Alternatively, you can enter the URL with the *ProjectName* specified, as shown in the following example:  
+   >`https://analytics.dev.azure.com/{OrganizationName}/{ProjectName}/_odata/{version}/`
+   >Using this format trims the results by the specified project across all entities related to that project.
 
-	<img src="_img/pbi4.png" alt="Select the entities of data to retrieve" style="border: 1px solid #C3C3C3;" /> 
+1. At the prompt, authenticate against the service. If you have not already done so, see [Client Authentication Options](client-authentication-options.md). 
 
-	At this point, if you choose **Load**, Power BI Desktop will load all of the data in each entity. However, this may be more data than you want. To filter the data, select the entity to filter and choose **Edit**. This brings up the Query Editor. For each column on which you want to filter, select it and set your filter. When this is complete choose **Close & Apply** in the upper left corner.  
+1. Select the check boxes next to the entities whose data you want to retrieve.
 
-### Handle relationships
+	> [!IMPORTANT]  
+	> Do *not* select entities whose name includes *Snapshot*. Such entities contain the state of every work item on each day since the work item was created. For repositories of any size, selecting these entities will cause tens to hundreds of millions of work items to fail to load. *Snapshot* tables are intended only for [aggregation queries](../extend-analytics/odata-query-guidelines.md).
 
-Understanding the [Analytics data model](../extend-analytics/data-model-analytics-service.md) is critical to building good relationships between entities. 
+    ![The Entities list on the Navigator page](media/pbi4.png)
 
-By default, when basic data is returned from the Analytics Service, the data is related as shown in the figure below:
+1. Select **Transform Data**. Do *not* select **Load**. 
 
-![Entity relationships](_img/pbi-relationships.png)  
+   > [!IMPORTANT]
+   > For each entity that you've selected, Power Query creates a query. Each query must be updated manually, because doing so *prevents throttling errors*. Power Query attempts to resolve null values as errors by generating an additional query for every null value it encounters. This can result in thousands of queries, which will quickly exceed your usage threshold, beyond which your user account will be throttled.
+   >   
+   > To prevent this issue:  
+   > - Instruct Power BI to reference OData v4.
+   > - Instruct the Analytics service to omit any values that are null, which improves query performance.
 
-You will note that the Tags, Teams and Users are not related to any of the other data. This is due to how those entities
-are related. They are related by either many-to-many relationships which are not easily handled in these models or 
-there are multiple relationships between the entities such as between users and work items (they are related by Assigned To,
-Created By, Changed By, and others).
+1. For each entity that you've selected in the preceding steps, do the following:
 
-Multiple relationships can be handled in fairly simply. For example, in the default model you can edit the query, select the
-AssignedTo column of the WorkItems table and expand the column to include all of the data from the Users table and you can repeat
-this process for the Created By and Changed By columns as well. This gets you around having multiple links from one table to another
-which is not allowed.
+    a. In the **Queries** list, select an entity whose query you want to. In this example, **Areas** is selected.
+      
+    ![The Power BI OData Feed Queries list](media/pbi5.png)  
+    
+    b. In the ribbon, select **Advanced Editor**.
+    
+    ![The Power BI OData Feed Advanced Editor button](media/AdvancedEditor.png)
+    
+    c. In the **Query** pane, scroll horizontally to view the `[Implementation="2.0"]` parameter.
+    
+    ![The Advanced Editor Query pane](media/odataquery-powerbi-advancededitor1.png)
+    
+    d. Replace `[Implementation="2.0"]` with the following string:  
+        `[Implementation="2.0",OmitValues = ODataOmitValues.Nulls,ODataVersion = 4]` 
+    
+    ![The Advanced Editor Query pane](media/odataquery-powerbi-advancededitor2.png)
+    
+1. Select **Close & Apply**. 
 
-Another reason for expanding columns in this way is to handle circular relationships which are also not allowed. For example, 
-take the following path: Projects > Areas > Work Items > Projects. This presents a typical circular problem. What if you
-wanted to see which ares were part of a given project? The model as it is build has relationships between Areas and Work Items and 
-Projects and Work Items but Projects cannot be related to Areas because that completes the circular relationship and so it is 
-not allowed. To handle this, you could expand the Project column in the Areas table. To do that, take the following steps:
+## Related articles
 
-1. Select **Edit Queries** from the **Home tab**  
-2. Select the **Areas query**  
-3. Scroll to the **Project column** (the last column) and click the Expand icon at the top of the column  
-
-    ![Areas Query, Project Column](_img/pbi-relationships-2.png) 
-
-4. Uncheck all of the columns except for the ProjectName and click OK
-
-    ![Expand Project options](_img/pbi-relationships-3.png) 
-
-Now you can list Areas by Project and get a count of Areas in each project.
+- [Dataset design for the Power BI Connector for Azure DevOps](data-connector-dataset.md)
+- [Data Connector - Example reports](data-connector-examples.md)

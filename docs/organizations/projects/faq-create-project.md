@@ -7,7 +7,7 @@ ms.assetid: 90e03b82-a6e8-47af-ad8c-5b134f4e3134
 ms.prod: devops
 ms.technology: devops-accounts
 ms.topic: conceptual
-ms.manager: douge
+ms.manager: mijacobs
 ms.author: chcomley
 author: chcomley
 ms.date: 12/19/2017
@@ -15,13 +15,13 @@ monikerRange: '>= tfs-2013'
 ---
 # Troubleshoot creating a project
 
-[!INCLUDE [temp](../../_shared/version-vsts-tfs-all-versions.md)]  
+[!INCLUDE [temp](../../includes/version-vsts-tfs-all-versions.md)] 
 
 ## Resolve errors
 
 ### To resolve permission related errors
 
-::: moniker range="vsts"
+::: moniker range="azure-devops"
 If you receive an error message that states you don't have permission, go get those permissions: become a member of the [Project Collection Administrators group](../security/set-project-collection-level-permissions.md).  
 ::: moniker-end
 
@@ -38,7 +38,7 @@ If you receive an error message that states you don't have permission, go get th
 
 **Error TF30169: The New Team Project Wizard was unable to download the process template {0}**  indicates that SharePoint site process templates aren't available on the server that hosts SharePoint products.
 
-Contact the system administrator for the server that hosts SharePoint Products and request the required process templates be added to the server. See [Requirements and compatibility](/tfs/server/requirements).
+Contact the system administrator for the server that hosts SharePoint Products and request the required process templates be added to the server. See [Requirements and compatibility](/azure/devops/server/requirements).
 
 ::: moniker-end
 
@@ -49,7 +49,7 @@ Contact the system administrator for the server that hosts SharePoint Products a
 Even when you've deleted a project, you may get the same name error. If a project create or delete operation doesn't successfully finish, some components could be created or deleted even though others aren't. In this event, you can't reuse the name associated with the project.
 
 ::: moniker range=">= tfs-2013 <= tfs-2018"
-To verify project deletion or remove remaining components associated with a partially deleted project, use the [Delete project command line tool(TFSDeleteProject)](/tfs/server/command-line/tfsdeleteproject-cmd). Then try again to create the project with the same name.
+To verify project deletion or remove remaining components associated with a partially deleted project, use the [Delete project command line tool(TFSDeleteProject)](/azure/devops/server/command-line/tfsdeleteproject-cmd). Then try again to create the project with the same name.
 
 Even with troubleshooting, you might not be able to use the same name. Some components of the deleted project could be scheduled for deletion but not yet deleted.
 
@@ -105,7 +105,7 @@ The log shows each action taken by the wizard at the time of the failure and may
 
 **A:** See one of these topics:
 
--   To add a SharePoint web application: [Add SharePoint products to your deployment](/tfs/server/admin/add-sharepoint-to-tfs).
+-   To add a SharePoint web application: [Add SharePoint products to your deployment](/azure/devops/server/admin/add-sharepoint-to-tfs).
 
 -   To configure a project portal to use an existing website or SharePoint site: [Configure a project portal](../../report/sharepoint-dashboards/configure-or-add-a-project-portal.md).
 
@@ -113,7 +113,7 @@ The log shows each action taken by the wizard at the time of the failure and may
 
 ### Q: Where can I go if I have more questions?
 
-**A:** You can post a question or search for answers in our [Developer Community](https://developercommunity.visualstudio.com/spaces/21/index.html), [Stack Overflow](https://stackoverflow.com/questions/tagged/vs-team-services), or through our [Support](https://www.visualstudio.com/team-services/support/) portal.
+**A:** You can post a question or search for answers in our [Developer Community](https://developercommunity.visualstudio.com/spaces/21/index.html), [Stack Overflow](https://stackoverflow.com/questions/tagged/vs-team-services), or through our [Support](https://www.visualstudio.com/team-services/support/) portal.
 
 
 

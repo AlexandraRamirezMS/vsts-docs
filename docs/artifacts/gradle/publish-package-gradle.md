@@ -1,11 +1,11 @@
 ---
-title: Publish a Maven artifact using Gradle and Azure DevOps Services
+title: Publish a Maven artifact using Gradle
 description: Publish a Maven artifact using Gradle in an Azure DevOps Services build
 ms.prod: devops
 ms.technology: devops-artifacts
-ms.manager: douge
-ms.author: elbatk
-author: elbatk
+ms.manager: mijacobs
+ms.author: phwilson
+author: chasewilson
 ms.reviewer: dastahel
 ms.topic: conceptual
 ms.date: 01/31/2018
@@ -21,7 +21,7 @@ This topic covers creating and publishing a Maven artifact with Gradle using Azu
 
 ## Prerequisites
 
-Before you start, [install the Gradle build tool](https://gradle.org/install/). Note that Gradle itself requires a prior installation of the Java JDK or JRE (version 7 or later). You can [get the Java JDK here](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
+Before you start, [install the Gradle build tool](https://gradle.org/install/). Note that Gradle itself requires a prior installation of the Java JDK or JRE (version 7 or later). You can [get the Java JDK here](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
 
 From a command prompt, verify that you have the Java JDK or JRE version 7 or later:
 
@@ -44,7 +44,7 @@ You're ready to start! This tutorial will guide you through the process of publi
 
 First, you need a **gradle.properties** file that contains an Azure DevOps Services credential token.
 
-# [New navigation](#tab/new-nav)
+::: moniker range=">= azure-devops-2019"
 
 Navigate to `https://dev.azure.com/{yourOrganization}/_usersSettings/tokens`, where `{yourOrganization}` is the name of your organization.
 
@@ -54,25 +54,28 @@ Give your token a name, duration, and select the **Packaging (read and write)** 
 
 > You may have to choose "Show all scopes" at the bottom to see the Packaging area.
 
-![Create packaging personal access token](../_shared/_img/create-packaging-pat.png)
+![Create packaging personal access token](../media/create-packaging-pat.png)
 
 Click **Create**.
 
-# [Previous navigation](#tab/previous-nav)
+::: moniker-end
+
+::: moniker range="<= tfs-2018"
 
 Navigate to `https://dev.azure.com/{yourOrganization}/_usersSettings/tokens`, where `{yourOrganization}` is the name of your organization.
 
 Click **Add**.
 
-![Add a personal access token](_img/add-pat.png)
+![Add a personal access token](media/add-pat.png)
 
 Give your new token a name and a duration. 
 
 Select the **Packaging (read and write)** scope.
 
-![Select a token scope](_img/select-scope.png)
+![Select a token scope](media/select-scope.png)
 
----
+::: moniker-end
+
 The token will be a long alphanumeric string, like "lzitaoxppojf6smpl2cxdoxybepfxfetjvtkmcpw3o6u2smgebfa". Copy this string and treat it securely.
 
 Now, go to the `.gradle` folder under the Gradle installation root directory. Typically, this is `%INSTALLPATH%/gradle/user/home/.gradle/`. In that folder, create a file named **gradle.properties**. 
@@ -129,6 +132,9 @@ repositories {
 ```
 In the above example, you are publishing artifacts and downloading dependent artifacts from the same organization. You can configure
 publishing and downloading to use separate organizations, if you prefer.
+
+> [!NOTE]
+> You can use the Azure Artifacts connect to feed dialog box to copy the `maven` repository section to use in your build.gradle file.
 
 Replace the following fields with your own values:
 
