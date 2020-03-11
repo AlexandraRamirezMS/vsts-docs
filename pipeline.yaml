@@ -1,2 +1,7 @@
 trigger:
-- master
+ branches:
+  include:
+    - master
+ paths:
+  include:
+    - src
