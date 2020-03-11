@@ -1,10 +1,9 @@
-
 # specific path build
-
 trigger:
   branches:
     include:
     - master
     - releases/*
   paths:
+    include:
     - '*'
