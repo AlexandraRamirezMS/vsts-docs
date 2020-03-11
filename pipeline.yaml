@@ -2,11 +2,8 @@
 # specific path build
 trigger:
   branches:
-   include:
+    include:
     - master
-
-paths:
-  include:
-    - docs/*
-
-
+    - releases/*
+  paths:
+    - src
