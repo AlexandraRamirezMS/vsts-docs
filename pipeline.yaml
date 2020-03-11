@@ -1,11 +1,11 @@
-# Build Project for PhoeniXGate UI - Core - Release
-#
 
+# specific path build
 trigger:
   branches:
    include:
     - master
- paths:
+
+paths:
   include:
     - docs/*
 
