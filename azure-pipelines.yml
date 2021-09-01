@@ -10,18 +10,18 @@ trigger:
     - master
   paths:
     include:
-    - monitoring/*
+    - vsts-docs/docs/*
     exclude:
-    - monitoring/README.md
+    - vsts-docs/docs/README.md
 pr:
   branches:
     include:
     - master
   paths:
     include:
-    - monitoring/*
+    - vsts-docs/docs/*
     exclude:
-    - monitoring/README.md
+    - vsts-docs/docs/README.md
 
 pool:
   vmImage: 'ubuntu-latest'
