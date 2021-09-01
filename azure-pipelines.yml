@@ -10,7 +10,7 @@ trigger:
     - master
   paths:
     include:
-    - vsts-docs/docs/*
+    - vsts-docs/*
     exclude:
     - vsts-docs/docs/README.md
 pr:
@@ -19,7 +19,7 @@ pr:
     - master
   paths:
     include:
-    - vsts-docs/docs/*
+    - vsts-docs/*
     exclude:
     - vsts-docs/docs/README.md
 
