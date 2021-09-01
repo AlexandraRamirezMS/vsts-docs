@@ -7,12 +7,12 @@ name: $(Date:yyyyMMdd)$(Rev:.r)
 trigger:
   branches:
     include:
-    - master
+     - master
   paths:
     include:
-    - vsts-docs/*
+     - vsts-docs/*
     exclude:
-    - vsts-docs/docs/README.md
+     - vsts-docs/docs/README.md
 
 pool:
   vmImage: 'ubuntu-latest'
