@@ -13,15 +13,6 @@ trigger:
     - vsts-docs/*
     exclude:
     - vsts-docs/docs/README.md
-pr:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - vsts-docs/*
-    exclude:
-    - vsts-docs/docs/README.md
 
 pool:
   vmImage: 'ubuntu-latest'
