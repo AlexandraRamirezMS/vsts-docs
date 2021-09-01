@@ -13,7 +13,6 @@ trigger:
      - vsts-docs/*
     exclude:
      - vsts-docs/docs/README.md
-
 pool:
   vmImage: 'ubuntu-latest'
 
