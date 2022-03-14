@@ -3,18 +3,13 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-
-
-pool:
-  vmImage: ubuntu-latest
-
 pr:
   branches:
-  include:
-  - development
-  - main
-  - Feature_*
-  - feature_*
+    include:
+    - development
+    - main
+    - Feature_*
+    - feature_*
   paths:
     include:
     - Source/Test/*
@@ -24,6 +19,10 @@ pr:
     - .gitattributes
     - .gitignore
     - README.md
+
+pool:
+  vmImage: ubuntu-latest
+
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
