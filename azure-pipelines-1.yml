@@ -4,13 +4,17 @@
 # https://aka.ms/yaml
 
 
-  pr:
-    branches:
-    include:
-    - development
-    - main
-    - Feature_*
-    - feature_*
+
+pool:
+  vmImage: ubuntu-latest
+
+pr:
+  branches:
+  include:
+  - development
+  - main
+  - Feature_*
+  - feature_*
   paths:
     include:
     - Source/Test/*
@@ -20,10 +24,6 @@
     - .gitattributes
     - .gitignore
     - README.md
-
-pool:
-  vmImage: ubuntu-latest
-
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
