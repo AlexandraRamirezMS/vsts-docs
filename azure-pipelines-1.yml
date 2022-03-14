@@ -8,6 +8,7 @@ pr:
     include:
     - development
     - main
+    - master
     - Feature_*
     - feature_*
   paths:
@@ -18,7 +19,7 @@ pr:
     - Source/Test/Demo/*
     - .gitattributes
     - .gitignore
-    - README.md
+    - master/README.md
 
 pool:
   vmImage: ubuntu-latest
