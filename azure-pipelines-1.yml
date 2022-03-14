@@ -6,20 +6,20 @@
 trigger:
   pr:
   branches:
-  include:
-  - development
-  - main
-  - Feature_*
-  - feature_*
+    include:
+    - development
+    - main
+    - Feature_*
+    - feature_*
   paths:
-  include:
-  - Source/Test/*
-  exclude:
-  - Build/*
-  - Source/Test/Demo/*
-  - .gitattributes
-  - .gitignore
-  - README.md
+    include:
+    - Source/Test/*
+    exclude:
+    - Build/*
+    - Source/Test/Demo/*
+    - .gitattributes
+    - .gitignore
+    - README.md
 
 pool:
   vmImage: ubuntu-latest
