@@ -20,6 +20,7 @@ pr:
     - .gitattributes
     - .gitignore
     - README.md
+    - vsts-docs/README.md
 
 pool:
   vmImage: ubuntu-latest
