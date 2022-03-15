@@ -7,8 +7,8 @@ pr:
   branches:
     include:
     - development
-    - main
-    - master
+#    - main
+#    - master
     - Feature_*
     - feature_*
   paths:
