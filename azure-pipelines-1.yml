@@ -19,7 +19,7 @@ pr:
     - Source/Test/Demo/*
     - .gitattributes
     - .gitignore
-    - master/README.md
+    - README.md
 
 pool:
   vmImage: ubuntu-latest
