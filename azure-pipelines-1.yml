@@ -23,7 +23,7 @@ pr:
     - vsts-docs/README.md
 
 pool:
-  vmImage: win-2016
+  vmImage: windows-2016
 
 steps:
 - script: echo Hello, world!
